@@ -40,11 +40,6 @@ module.exports =
         }
         else
         {
-            let curseChance = 95;
-            if (dickheads.includes(msg.author.username)) curseChance = 85;
-            const roll = Math.floor(Math.random() * 101);
-            console.error(`Roll: ${msg.author.username} ${msg.channel.name} ${roll}`);
-
             // ποσο - τοσο joke
             if (msg.content.includes("πόσο") || msg.content.includes("ποσο") || msg.content.includes("Πόσο") || msg.content.includes("Ποσο") || msg.content.includes("ΠΟΣΟ")
                 || msg.content.includes("poso") || msg.content.includes("Poso") || msg.content.includes("POSO"))
@@ -59,12 +54,20 @@ module.exports =
                 return;
             }
             // Βρίζει μάνες
-            else if (roll > curseChance)
+            else
             {
-                let curse = GetCurse();
-                curse = curse.replace("name", msg.author);
-                await msg.channel.send(curse);
-                return;
+                let curseChance = 95;
+                if (dickheads.includes(msg.author.username)) curseChance = 85;
+                const roll = Math.floor(Math.random() * 101);
+                console.error(`Roll: ${msg.author.username} ${msg.channel.name} ${roll}`);
+
+                if (roll > curseChance)
+                {
+                    let curse = GetCurse();
+                    curse = curse.replace("name", msg.author);
+                    await msg.channel.send(curse);
+                    return;
+                }
             }
         }
         
