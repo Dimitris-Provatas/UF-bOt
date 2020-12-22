@@ -8,9 +8,8 @@ module.exports =
             await msg.react("🔥");
             return;
         }
-
         // Mee6 bot
-        if (msg.author.username === "MEE6" && msg.author.discriminator === "4876")
+        else if (msg.author.username === "MEE6" && msg.author.discriminator === "4876")
         {
             // middle finger
             await msg.react('🖕');
@@ -22,15 +21,10 @@ module.exports =
             await msg.react("🇦");
             return;
         }
-        else ConsoleError('bot', msg.author.username)
+        else ConsoleError('bot', msg.author.username, msg.channel.name)
     },
     HandleHumans: async function (bot, msg)
     {
-        if (msg.channel.name === "event-creating" || msg.channel.name === "event-announcement") return;
-
-        let curseChance = 95;
-        if (dickheads.includes(msg.author.username)) curseChance = 80;
-
         // suggestions
         if (msg.content.includes("!suggestion"))
         {
@@ -44,28 +38,37 @@ module.exports =
 
             return;
         }
-        // ποσο - τοσο joke
-        else if (msg.content.includes("πόσο") || msg.content.includes("ποσο") || msg.content.includes("Πόσο") || msg.content.includes("Ποσο") || msg.content.includes("ΠΟΣΟ")
-            || msg.content.includes("poso") || msg.content.includes("Poso") || msg.content.includes("POSO"))
+        else
         {
-            await msg.channel.send(`${msg.author} ΤΟΣΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-            return;
+            let curseChance = 95;
+            if (dickheads.includes(msg.author.username)) curseChance = 85;
+            const roll = Math.floor(Math.random() * 101);
+            console.error(`Roll: ${msg.author.username} ${msg.channel.name} ${roll}`);
+
+            // ποσο - τοσο joke
+            if (msg.content.includes("πόσο") || msg.content.includes("ποσο") || msg.content.includes("Πόσο") || msg.content.includes("Ποσο") || msg.content.includes("ΠΟΣΟ")
+                || msg.content.includes("poso") || msg.content.includes("Poso") || msg.content.includes("POSO"))
+            {
+                await msg.channel.send(`${msg.author} ΤΟΣΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+                return;
+            }
+            else if (msg.content.includes("πόσα") || msg.content.includes("ποσα") || msg.content.includes("Πόσα") || msg.content.includes("Ποσα") || msg.content.includes("ΠΟΣΑ")
+                || msg.content.includes("posa") || msg.content.includes("Posa") || msg.content.includes("POSA"))
+            {
+                await msg.channel.send(`${msg.author} ΤΟΣΑ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+                return;
+            }
+            // Βρίζει μάνες
+            else if (roll > curseChance)
+            {
+                let curse = GetCurse();
+                curse = curse.replace("name", msg.author);
+                await msg.channel.send(curse);
+                return;
+            }
         }
-        else if (msg.content.includes("πόσα") || msg.content.includes("ποσα") || msg.content.includes("Πόσα") || msg.content.includes("Ποσα") || msg.content.includes("ΠΟΣΑ")
-            || msg.content.includes("posa") || msg.content.includes("Posa") || msg.content.includes("POSA"))
-        {
-            await msg.channel.send(`${msg.author} ΤΟΣΑ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-            return;
-        }
-        // Βρίζει μάνες
-        else if (Math.floor(Math.random() * 101) > curseChance)
-        {
-            let curse = GetCurse();
-            curse = curse.replace("name", msg.author);
-            await msg.channel.send(curse);
-            return;
-        }
-        else ConsoleError('user', msg.author.username)
+        
+        ConsoleError('user', msg.author.username, msg.channel.name)
     }
 }
 
@@ -80,6 +83,7 @@ const dickheads = [
     "ʙᴇʏᴏɴᴅᴛʜᴇᴍᴀᴄʜ1ɴ3",
     "𝓢𝓽𝓮𝓵𝓲𝓸𝓢",
     "𝓗𝓮𝓵𝓵𝓯𝓪𝓵𝓵𝓮𝓷",
+    "StaikoChan",
 ];
 
 const curses = [
@@ -103,9 +107,9 @@ const curses = [
     "name , το μόνο flawless που θα βγάλεις θα είναι το server ban με αυτά που βλέπω.",
 ];
 
-function ConsoleError(type, user)
+function ConsoleError(type, user, channel)
 {
-    console.log(`No handler for ${type} ${user}!`)
+    console.log(`No action taken for ${type} ${user} in channel \'${channel}\'!`)
 }
 
 function GetCurse()
