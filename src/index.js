@@ -14,7 +14,7 @@ bot.on('ready', () => {
 bot.on('message', async message =>
 {
     if (message.author.bot)
-        await handler.HandleBots(message);
+        await handler.HandleBots(bot, message);
     else
-        await handler.HandleHumans(message);
+        await handler.HandleHumans(bot, message);
 });
