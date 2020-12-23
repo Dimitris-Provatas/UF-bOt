@@ -46,21 +46,35 @@ module.exports =
         }
         else
         {
-            // οκτω
-            if (msg.content.includes("8 ") || msg.content.includes(" 8") ||  msg.content.includes("οκτω") || msg.content.includes("οκτώ") || msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") || msg.content.includes("οχτω") || msg.content.includes("οχτώ") || msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") || msg.content.includes("okto") || msg.content.includes("Okto") || msg.content.includes("OKTO"))
+            // Link check
+            // Deny links and emojis
+            // Any message that must not be a link to be proccessed
+            if (!msg.content.includes("http") && !msg.content.includes("<:"))
             {
-                await msg.channel.send(`${msg.author} ΟΥΧΤΟ; ΤΗΣ ΜΑΝΑΣ ΤΟΝ ΠΡΟΥΧΤΟ!`);
-                return;
+                // οκτω
+                if (
+                    msg.content.includes("8") || msg.content.includes("οκτω") || msg.content.includes("οκτώ") || msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") || msg.content.includes("οχτω") || msg.content.includes("οχτώ") || msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") || msg.content.includes("okto") || msg.content.includes("Okto") || msg.content.includes("OKTO")
+                    )
+                    await msg.channel.send(`${msg.author} ΟΥΧΤΟ; ΤΗΣ ΜΑΝΑΣ ΤΟΝ ΠΡΟΥΧΤΟ!`);
+                
+                return; // end the deny links and emojis check, and return, so no other actions take place
             }
+
+            // Allow links and emojis
             // ποσο - τοσο joke
-            else if (msg.content.includes("πόσο") || msg.content.includes("ποσο") || msg.content.includes("Πόσο") || msg.content.includes("Ποσο") || msg.content.includes("ΠΟΣΟ")
-                || msg.content.includes("poso") || msg.content.includes("Poso") || msg.content.includes("POSO"))
+            if (
+                msg.content.includes("πόσο") || msg.content.includes("ποσο") || msg.content.includes("Πόσο") || msg.content.includes("Ποσο") || msg.content.includes("ΠΟΣΟ")
+                || msg.content.includes("poso") || msg.content.includes("Poso") || msg.content.includes("POSO")
+                )
             {
                 await msg.channel.send(`${msg.author} ΤΟΣΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
                 return;
             }
-            else if (msg.content.includes("πόσα") || msg.content.includes("ποσα") || msg.content.includes("Πόσα") || msg.content.includes("Ποσα") || msg.content.includes("ΠΟΣΑ")
-                || msg.content.includes("posa") || msg.content.includes("Posa") || msg.content.includes("POSA"))
+            // ποσα - τοσα joke
+            else if (
+                msg.content.includes("πόσα") || msg.content.includes("ποσα") || msg.content.includes("Πόσα") || msg.content.includes("Ποσα") || msg.content.includes("ΠΟΣΑ")
+                || msg.content.includes("posa") || msg.content.includes("Posa") || msg.content.includes("POSA")
+                )
             {
                 await msg.channel.send(`${msg.author} ΤΟΣΑ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
                 return;
@@ -95,8 +109,6 @@ const dickheads = [
     "ShEkIrO",
     "Daddy Gelt",
     "✪𝔉𝔲𝔯𝔦𝔬𝔲S✪",
-    "ʙᴇʏᴏɴᴅᴛʜᴇᴍᴀᴄʜ1ɴ3",
-    "𝓢𝓽𝓮𝓵𝓲𝓸𝓢",
     "𝓗𝓮𝓵𝓵𝓯𝓪𝓵𝓵𝓮𝓷",
     "StaikoChan",
 ];
