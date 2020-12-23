@@ -46,13 +46,15 @@ module.exports =
             // Link check
             // Deny links and emojis
             // Any message that must not be a link to be proccessed
-            if (!msg.content.includes("http") && !msg.content.includes("<:"))
+            if (!msg.content.includes("http") && !msg.content.includes("<:") && !msg.content.includes("<@"))
             {
                 // οκτω 
                 if (
                     msg.content.includes("8") || msg.content.includes("οκτω") || msg.content.includes("οκτώ") || msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") || msg.content.includes("οχτω") || msg.content.includes("οχτώ") || msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") || msg.content.includes("okto") || msg.content.includes("Okto") || msg.content.includes("OKTO")
                     )
                 {
+                    console.log(`<- Μπήκα στο 8 γιατί το message ήταν: ${msg.content} ->`);
+                    console.log(`--------------------------------------------------------------`);
                     await msg.channel.send(`${msg.author} ΟΥΧΤΟ; ΤΗΣ ΜΑΝΑΣ ΤΟΝ ΠΡΟΥΧΤΟ!`);
                     return;
                 }
@@ -130,7 +132,8 @@ const curses = [
 
 function ConsoleError(type, user, channel)
 {
-    console.log(`No action taken for ${type} ${user} in channel \'${channel}\'!`)
+    console.log(`No action taken for ${type} ${user} in channel \'${channel}\'!`);
+    console.log(`--------------------------------------------------------------`);
 }
 
 function GetCurse()
