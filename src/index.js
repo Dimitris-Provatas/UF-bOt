@@ -18,29 +18,29 @@ bot.on('ready', () => {
 
 bot.on('message', async message =>
 {
-    if (message.isMemberMentioned(bot.user))
+    if (// General commands
+        message.channel.name.includes("music") ||
+        // Welcome
+        message.channel.name === "welcome" ||
+        message.channel.name === "rules" ||
+        message.channel.name === "lifo-news" ||
+        // All chats
+        message.channel.name === "roles-channel" ||
+        message.channel.name === "free-games" ||
+        // Destiny
+        message.channel.name === "event-creating" ||
+        message.channel.name === "event-announcement" ||
+        message.channel.name === "cheese-videos" ||
+        // Warframe
+        message.channel.name === "mandachord"
+        ) 
+        return;
+    else if (message.isMemberMentioned(bot.user))
     {
         await message.react("😢");
         await message.channel.send(`${message.author}, οΙ λΈξεΙς ΠονΆΝε!`);
         return;
     }
-    else if (// General commands
-            message.channel.name.includes("music") ||
-            // Welcome
-            message.channel.name === "welcome" ||
-            message.channel.name === "rules" ||
-            message.channel.name === "lifo-news" ||
-            // All chats
-            message.channel.name === "roles-channel" ||
-            message.channel.name === "free-games" ||
-            // Destiny
-            message.channel.name === "event-creating" ||
-            message.channel.name === "event-announcement" ||
-            message.channel.name === "cheese-videos" ||
-            // Warframe
-            message.channel.name === "mandachord"
-            ) 
-        return;
     else if (message.author.bot)
         await handler.HandleBots(bot, message);
     else
