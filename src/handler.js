@@ -21,6 +21,22 @@ module.exports =
             await msg.react("🇦");
             return;
         }
+        // Dank Memer
+        else if (msg.author.username === "Dank Memer" && msg.author.discriminator === "5192")
+        {
+            await msg.react("🔥");
+            await msg.react("👌");
+            await msg.react("🇩");
+            await msg.react("🇦");
+            await msg.react("🇳");
+            await msg.react("🇰");
+            await msg.react("🇸");
+            await msg.react("🇭");
+            await msg.react("🇮");
+            await msg.react("🇹");
+            await msg.react("💯");
+            return;
+        }
         else ConsoleError('bot', msg.author.username, msg.channel.name)
     },
     HandleHumans: async function (bot, msg)
