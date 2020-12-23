@@ -27,10 +27,7 @@ module.exports =
     {
         // handle lfg
         if (msg.channel.name.includes("looking-for-guardians"))
-        {
-            await HandleLFG(msg);
-            return;
-        }
+            await HandleLFG(msg).then(() => { return; });
         // suggestions
         else if (msg.content.includes("!suggestion"))
         {
@@ -51,13 +48,14 @@ module.exports =
             // Any message that must not be a link to be proccessed
             if (!msg.content.includes("http") && !msg.content.includes("<:"))
             {
-                // οκτω
+                // οκτω 
                 if (
                     msg.content.includes("8") || msg.content.includes("οκτω") || msg.content.includes("οκτώ") || msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") || msg.content.includes("οχτω") || msg.content.includes("οχτώ") || msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") || msg.content.includes("okto") || msg.content.includes("Okto") || msg.content.includes("OKTO")
                     )
+                {
                     await msg.channel.send(`${msg.author} ΟΥΧΤΟ; ΤΗΣ ΜΑΝΑΣ ΤΟΝ ΠΡΟΥΧΤΟ!`);
-                
-                return; // end the deny links and emojis check, and return, so no other actions take place
+                    return;
+                }
             }
 
             // Allow links and emojis
@@ -81,20 +79,10 @@ module.exports =
             }
             // Βρίζει μάνες
             else
-            {
-                let curseChance = 95;
-                if (dickheads.includes(msg.author.username)) curseChance = 85;
-                const roll = Math.floor(Math.random() * 101);
-                console.error(`Roll: ${msg.author.username} ${msg.channel.name} ${roll}`);
-
-                if (roll > curseChance)
-                {
-                    let curse = GetCurse();
-                    curse = curse.replace("name", msg.author);
-                    await msg.channel.send(curse);
-                    return;
-                }
-            }
+                await CurseEverything(msg).then(
+                    () => { return; },  // resolve
+                    () => { console.log("Roll not high enough!") }  // reject
+                );
         }
         
         ConsoleError('user', msg.author.username, msg.channel.name)
@@ -102,6 +90,7 @@ module.exports =
 }
 
 // Helper Functions
+let lastLFGSender;
 const fs = require('fs');
 const suggestionsFile = "./src/suggestions.txt";
 
@@ -153,17 +142,35 @@ function Suggestion(suggestion, author)
 {
     fs.appendFile(suggestionsFile, `O ${author} προτίνει: ${suggestion}\r\n`, function (err)
     {
-        if (err) return console.log(err);
-        console.log(`${suggestion} > ${suggestionsFile}`);
+        if (err) console.log(err);
     });
 }
 
 async function HandleLFG(msg)
 {
-    if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466")
+    if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466" && msg.author !== lastLFGSender)
     {
         await msg.react("🍆");
         await msg.channel.send(`Τι λέει ${msg.author}, πάλι κουβάλημα θέλουμε;`);
-        return;
+        lastLFGSender = msg.author;
+        return Promise.resolve();
     }
+}
+
+async function CurseEverything(msg)
+{
+    let curseChance = 95;
+    if (dickheads.includes(msg.author.username)) curseChance = 85;
+    const roll = Math.floor(Math.random() * 101);
+    console.log(`Roll: ${msg.author.username} ${msg.channel.name} ${roll}`);
+
+    if (roll > curseChance)
+    {
+        let curse = GetCurse();
+        curse = curse.replace("name", msg.author);
+        await msg.channel.send(curse);
+        return Promise.resolve();
+    }
+
+    return Promise.reject();
 }
