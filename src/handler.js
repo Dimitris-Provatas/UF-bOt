@@ -102,6 +102,7 @@ const dickheads = [
     "✪𝔉𝔲𝔯𝔦𝔬𝔲S✪",
     "𝓗𝓮𝓵𝓵𝓯𝓪𝓵𝓵𝓮𝓷",
     "StaikoChan",
+    "The face of true Carnage",
 ];
 
 const curses = [
@@ -128,6 +129,8 @@ const curses = [
     "name, για κάθε μαλακία που λες, ένας μικρό παχύσαρκο ανήλικο βιάζεται σεξουαλικά από τον αδερφό του!",
     "name, ok boomer!",
     "Για αυτό δεν σε αγαπάει η μάνα σου, name.",
+    "name, είσαι στείρος!",
+    "video stfu",
 ];
 
 function ConsoleError(type, user, channel)
@@ -170,8 +173,18 @@ async function CurseEverything(msg)
     if (roll > curseChance)
     {
         let curse = GetCurse();
-        curse = curse.replace("name", msg.author);
-        await msg.channel.send(curse);
+        if (curse.includes("name"))
+        {
+            curse = curse.replace("name", msg.author);
+            await msg.channel.send(curse);
+        }
+        else if (curse.includes("video"))
+        {
+            const video = curse.split(" ")[1];
+            curse = { files: [`./src/media/${video}.mp4`] };
+            await msg.channel.send(msg.author, curse);
+        }
+
         return Promise.resolve();
     }
 
