@@ -25,8 +25,14 @@ module.exports =
     },
     HandleHumans: async function (bot, msg)
     {
+        // handle lfg
+        if (msg.channel.name.includes("looking-for-guardians"))
+        {
+            await HandleLFG(msg);
+            return;
+        }
         // suggestions
-        if (msg.content.includes("!suggestion"))
+        else if (msg.content.includes("!suggestion"))
         {
             if (!msg.content.includes("!suggestion "))
                 msg.channel.send(`Να σου πω ρε τόλη ${msg.author}, ψήνεσαι να προτίνεις κάτι;`);
@@ -40,8 +46,14 @@ module.exports =
         }
         else
         {
+            // οκτω
+            if (msg.content.includes("8 ") || msg.content.includes(" 8") ||  msg.content.includes("οκτω") || msg.content.includes("οκτώ") || msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") || msg.content.includes("οχτω") || msg.content.includes("οχτώ") || msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") || msg.content.includes("okto") || msg.content.includes("Okto") || msg.content.includes("OKTO"))
+            {
+                await msg.channel.send(`${msg.author} ΟΥΧΤΟ; ΤΗΣ ΜΑΝΑΣ ΤΟΝ ΠΡΟΥΧΤΟ!`);
+                return;
+            }
             // ποσο - τοσο joke
-            if (msg.content.includes("πόσο") || msg.content.includes("ποσο") || msg.content.includes("Πόσο") || msg.content.includes("Ποσο") || msg.content.includes("ΠΟΣΟ")
+            else if (msg.content.includes("πόσο") || msg.content.includes("ποσο") || msg.content.includes("Πόσο") || msg.content.includes("Ποσο") || msg.content.includes("ΠΟΣΟ")
                 || msg.content.includes("poso") || msg.content.includes("Poso") || msg.content.includes("POSO"))
             {
                 await msg.channel.send(`${msg.author} ΤΟΣΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
@@ -99,15 +111,20 @@ const curses = [
     "name, ο Χίτλερ είχε καλύτερες απόψεις από εσένα νέγρε.",
     "name, με αυτά που λες, πώς να μην σε κυνηγάνε με παντόφλα;",
     "name, ελπίζω τα Χριστούγεννα να σου φέρει ο Αϊ Βασίλης εγκέφαλο!",
-    "name , η θεωρία της σχετικότητας μάλλον περιστρέφεται γύρω από την μαύρη τρύπα που έχεις για εγκέφαλο!",
+    "name, η θεωρία της σχετικότητας μάλλον περιστρέφεται γύρω από την μαύρη τρύπα που έχεις για εγκέφαλο!",
     "name, ΠΩΩΩΩΩΩΩΩ, τι είπες πάλι ρε καμπουρογαμόσαυρε;",
-    "name , φωτιά στον κώλο σου και ακόμα παραπέρα!",
-    "name , αν το ξαναπείς αυτό θα σου μπιπ το τρίκι τρίκι!",
-    "name , είναι 8; Γιατί της μάνας σου τον προυκτό!",
+    "name, φωτιά στον κώλο σου και ακόμα παραπέρα!",
+    "name, αν το ξαναπείς αυτό θα σου μπιπ το τρίκι τρίκι!",
+    // "name, είναι 8; Γιατί της μάνας σου τον προυκτό!",
     "name, μακάρι να σε έκανε ban ο Μπάμπης μετά από αυτό.",
-    "name , ΣΟΥ ΕΎΧΟΜΑΙ ΝΑ ΣΕ ΚΆΝΟΥΝ ΌΛΟΙ REPORT!",
+    "name, ΣΟΥ ΕΎΧΟΜΑΙ ΝΑ ΣΕ ΚΆΝΟΥΝ ΌΛΟΙ REPORT!",
     "name, is time for your pee pee poo poo check.",
-    "name , το μόνο flawless που θα βγάλεις θα είναι το server ban με αυτά που βλέπω.",
+    "name, το μόνο flawless που θα βγάλεις θα είναι το server ban με αυτά που βλέπω.",
+    "name, ΠΑΜ ΠΑΜ ΕΠΑΘΕΣ AIDS! Γιατί να πάθουμε και εμείς με αυτά που λες;",
+    "name, uα σε απελάσω σκουπίδι… Θα πας πίσω στα Τίρανα!",
+    "name, για κάθε μαλακία που λες, ένας μικρό παχύσαρκο ανήλικο βιάζεται σεξουαλικά από τον αδερφό του!",
+    "name, ok boomer!",
+    "Για αυτό δεν σε αγαπάει η μάνα σου, name.",
 ];
 
 function ConsoleError(type, user, channel)
@@ -127,4 +144,14 @@ function Suggestion(suggestion, author)
         if (err) return console.log(err);
         console.log(`${suggestion} > ${suggestionsFile}`);
     });
+}
+
+async function HandleLFG(msg)
+{
+    if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466")
+    {
+        await msg.react("🍆");
+        await msg.channel.send(`Τι λέει ${msg.author}, πάλι κουβάλημα θέλουμε;`);
+        return;
+    }
 }
