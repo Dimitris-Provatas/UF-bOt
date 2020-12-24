@@ -43,7 +43,14 @@ module.exports =
     {
         // handle lfg
         if (msg.channel.name.includes("looking-for-guardians"))
-            await HandleLFG(msg).then(() => { return; });
+            await HandleLFG(msg).then(
+                () => { return; },
+                () => 
+                {
+                    console.log(`The same dude sent to LFG chat. Dude was ${msg.author.username}.`);
+                    return;
+                }
+            );
         // suggestions
         else if (msg.content.includes("!suggestion"))
         {
@@ -175,6 +182,8 @@ async function HandleLFG(msg)
         lastLFGSender = msg.author;
         return Promise.resolve();
     }
+
+    return Promise.reject();
 }
 
 async function CurseEverything(msg)
@@ -182,7 +191,7 @@ async function CurseEverything(msg)
     let curseChance = 95;
     if (dickheads.includes(msg.author.username)) curseChance = 85;
     const roll = Math.floor(Math.random() * 101);
-    console.log(`Roll: ${msg.author.username} ${msg.channel.name} ${roll}`);
+    await console.log(`Roll: ${msg.author.username} ${msg.channel.name} ${roll}`);
 
     if (roll > curseChance)
     {
