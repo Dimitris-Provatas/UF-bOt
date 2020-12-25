@@ -156,7 +156,11 @@ const curses = [
     "name, ok boomer!",
     "Για αυτό δεν σε αγαπάει η μάνα σου, name.",
     "name, είσαι στείρος!",
+
+    // Videos
     "video stfu",
+
+    // Gifs
 ];
 
 function ConsoleError(type, user, channel)
