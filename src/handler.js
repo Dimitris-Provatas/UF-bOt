@@ -41,18 +41,7 @@ module.exports =
     },
     HandleHumans: async function (bot, msg)
     {
-        // handle lfg
-        if (msg.channel.name.includes("looking-for-guardians"))
-            await HandleLFG(msg).then(
-                () => { return; },
-                () => 
-                {
-                    console.log(`The same dude sent to LFG chat. Dude was ${msg.author.username}.`);
-                    return;
-                }
-            );
-        // suggestions
-        else if (msg.content.includes("!suggestion"))
+        if (msg.content.includes("!suggestion"))
         {
             if (!msg.content.includes("!suggestion "))
                 msg.channel.send(`Να σου πω ρε τόλη ${msg.author}, ψήνεσαι να προτίνεις κάτι;`);
@@ -64,6 +53,17 @@ module.exports =
 
             return;
         }
+        // // handle lfg
+        // else if (msg.channel.name.includes("looking-for-guardians"))
+        //     await HandleLFG(msg).then(
+        //         () => { return; },
+        //         () => 
+        //         {
+        //             console.log(`The same dude sent to LFG chat. Dude was ${msg.author.username}.`);
+        //             return;
+        //         }
+        //     );
+        // // suggestions
         else
         {
             // Link check
@@ -100,11 +100,16 @@ module.exports =
                 await msg.channel.send(`${msg.author} ΤΟΣΑ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
                 return;
             }
+            else if (msg.content.includes("<:woah:786165881038307358>"))
+            {
+                await msg.react(bot.emojis.get("786165881038307358"));
+                return;
+            }
             // Βρίζει μάνες
             else
                 await CurseEverything(msg).then(
                     () => { return; },  // resolve
-                    () => { console.log("Roll not high enough!") }  // reject
+                    () => { console.log("Roll not high enough!"); }  // reject
                 );
         }
         
@@ -175,11 +180,12 @@ function Suggestion(suggestion, author)
 
 async function HandleLFG(msg)
 {
-    if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466" && msg.author !== lastLFGSender)
+    if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466" && msg.author.username !== lastLFGSender)
     {
         await msg.react("🍆");
         await msg.channel.send(`Τι λέει ${msg.author}, πάλι κουβάλημα θέλουμε;`);
-        lastLFGSender = msg.author;
+        lastLFGSender = msg.author.username;
+        console.log(`LastLFGSender: ${lastLFGSender}`);
         return Promise.resolve();
     }
 
@@ -204,7 +210,13 @@ async function CurseEverything(msg)
         else if (curse.includes("video"))
         {
             const video = curse.split(" ")[1];
-            curse = { files: [`./src/media/${video}.mp4`] };
+            curse = { files: [`./src/media/videos/${video}.mp4`] };
+            await msg.channel.send(msg.author, curse);
+        }
+        else if (curse.includes("gif"))
+        {
+            const gif = curse.split(" ")[1];
+            curse = { files: [`./src/media/gifs/${gif}.gif`] };
             await msg.channel.send(msg.author, curse);
         }
 
