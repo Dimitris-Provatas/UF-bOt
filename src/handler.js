@@ -182,11 +182,11 @@ function Suggestion(suggestion, author)
     fs.appendFile(suggestionsFile, `${time}: O ${author} προτίνει: ${suggestion}\r\n`, function (err)
     {
         if (err)
-        {
             console.log(err);
-            return;
-        }
-        console.log(`${time}: O ${author} έκανε μία πρότασή!`);
+        else 
+            console.log(`${time}: O ${author} έκανε μία πρότασή!`);
+            
+        console.log(`----------------------------------------------------------------------------------------------------------------------------`);
     });
 }
 
