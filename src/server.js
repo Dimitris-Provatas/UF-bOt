@@ -2,12 +2,21 @@ const express = require('express');
 
 const server = express();
 
+const d = new Date();
+
 server.all('/', (req, res)=>{
     res.send("UF_bot Online!");
 })
 
-function keepAlive(){
-    server.listen(3000, ()=>{console.log("Server is Ready!")});
+function keepAlive()
+{
+    const time = replaceAll(d.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
+    server.listen(3000, ()=>{console.log(`${time}: Server is Ready!`)});
+}
+
+function replaceAll(string, search, replace)
+{
+    return string.split(search).join(replace);
 }
 
 module.exports = keepAlive;

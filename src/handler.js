@@ -1,5 +1,9 @@
 module.exports =
 {
+    GetTime: function ()
+    {
+        return GetTime();
+    },
     HandleBots: async function (bot, msg)
     {
         // Ignore self
@@ -41,7 +45,7 @@ module.exports =
     },
     HandleHumans: async function (bot, msg)
     {
-        if (msg.content.includes("!suggestion"))
+        if (msg.content.split(" ")[0].includes("!suggestion"))
         {
             if (!msg.content.includes("!suggestion "))
                 msg.channel.send(`Να σου πω ρε τόλη ${msg.author}, ψήνεσαι να προτίνεις κάτι;`);
@@ -119,6 +123,7 @@ module.exports =
 
 // Helper Functions
 let lastLFGSender;
+const d = new Date();
 const fs = require('fs');
 const suggestionsFile = "./src/suggestions.txt";
 
@@ -132,6 +137,7 @@ const dickheads = [
 ];
 
 const curses = [
+    // Απλά
     "name, άντε γαμήσου ρε μαλάκα!",
     "name, ΡΕ ΦΥΓΕ ΡΕ ΜΑΛΑΚΑ ΑΠΟ ΔΩ ΡΕ ΜΠΡΟ!",
     "name, δεν έχεις κάποιου άλλου της μπάλες να σπάσεις;",
@@ -145,7 +151,6 @@ const curses = [
     "name, ΠΩΩΩΩΩΩΩΩ, τι είπες πάλι ρε καμπουρογαμόσαυρε;",
     "name, φωτιά στον κώλο σου και ακόμα παραπέρα!",
     "name, αν το ξαναπείς αυτό θα σου μπιπ το τρίκι τρίκι!",
-    // "name, είναι 8; Γιατί της μάνας σου τον προυκτό!",
     "name, μακάρι να σε έκανε ban ο Μπάμπης μετά από αυτό.",
     "name, ΣΟΥ ΕΎΧΟΜΑΙ ΝΑ ΣΕ ΚΆΝΟΥΝ ΌΛΟΙ REPORT!",
     "name, is time for your pee pee poo poo check.",
@@ -156,6 +161,7 @@ const curses = [
     "name, ok boomer!",
     "Για αυτό δεν σε αγαπάει η μάνα σου, name.",
     "name, είσαι στείρος!",
+    "name, μάθε να κουνάς πιο γρήγορα το ποντίκι σου πρώτα!",
 
     // Videos
     "video stfu",
@@ -165,36 +171,48 @@ const curses = [
 
 function ConsoleError(type, user, channel)
 {
-    console.log(`No action taken for ${type} ${user} in channel \'${channel}\'!`);
-    console.log(`--------------------------------------------------------------`);
-}
-
-function GetCurse()
-{
-    return curses[Math.floor(Math.random() * curses.length)];
+    const time = GetTime();
+    console.log(`${time}: No action taken for ${type} ${user} in channel \'${channel}\'!`);
+    console.log(`----------------------------------------------------------------------------------------------------------------------------`);
 }
 
 function Suggestion(suggestion, author)
 {
-    fs.appendFile(suggestionsFile, `O ${author} προτίνει: ${suggestion}\r\n`, function (err)
+    const time = GetTime();
+    fs.appendFile(suggestionsFile, `${time}: O ${author} προτίνει: ${suggestion}\r\n`, function (err)
     {
-        if (err) console.log(err);
+        if (err)
+        {
+            console.log(err);
+            return;
+        }
+        console.log(`${time}: O ${author} έκανε μία πρότασή!`);
     });
 }
 
-async function HandleLFG(msg)
+function replaceAll(string, search, replace)
 {
-    if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466" && msg.author.username !== lastLFGSender)
-    {
-        await msg.react("🍆");
-        await msg.channel.send(`Τι λέει ${msg.author}, πάλι κουβάλημα θέλουμε;`);
-        lastLFGSender = msg.author.username;
-        console.log(`LastLFGSender: ${lastLFGSender}`);
-        return Promise.resolve();
-    }
-
-    return Promise.reject();
+    return string.split(search).join(replace);
 }
+
+function GetTime()
+{
+    return replaceAll(d.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
+}
+
+// async function HandleLFG(msg)
+// {
+//     if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466" && msg.author.username !== lastLFGSender)
+//     {
+//         await msg.react("🍆");
+//         await msg.channel.send(`Τι λέει ${msg.author}, πάλι κουβάλημα θέλουμε;`);
+//         lastLFGSender = msg.author.username;
+//         console.log(`LastLFGSender: ${lastLFGSender}`);
+//         return Promise.resolve();
+//     }
+
+//     return Promise.reject();
+// }
 
 async function CurseEverything(msg)
 {
@@ -205,7 +223,7 @@ async function CurseEverything(msg)
 
     if (roll > curseChance)
     {
-        let curse = GetCurse();
+        let curse = curses[Math.floor(Math.random() * curses.length)];
         if (curse.includes("name"))
         {
             curse = curse.replace("name", msg.author);

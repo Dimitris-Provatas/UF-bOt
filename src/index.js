@@ -8,12 +8,15 @@ const bot = new Discord.Client();
 
 const handler = require('./handler');
 
+const d = new Date();
+
 keepAlive();
 bot.login(secrets.token);
 
 bot.on('ready', () => {
-    console.info(`Logged in as ${bot.user.tag}!`);
-    console.log(`--------------------------------------------------------------`);
+    const time = handler.GetTime();
+    console.info(`${time}: Logged in as ${bot.user.tag}!`);
+    console.log(`----------------------------------------------------------------------------------------------------------------------------`);
 });
 
 bot.on('message', async message =>
