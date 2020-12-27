@@ -159,6 +159,7 @@ const curses = [
 
     // Videos
     "video stfu",
+    "video ur_opinion_does_not_matter",
 
     // Gifs
 ];
