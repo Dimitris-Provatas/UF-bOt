@@ -1,7 +1,6 @@
 module.exports =
 {
-    GetTime: function ()
-    {
+    GetTime: function () {
         return GetTime();
     },
     HandleBots: async function (bot, msg)
@@ -25,22 +24,17 @@ module.exports =
             await msg.react("🇦");
             return;
         }
-        // Dank Memer
-        else if (msg.author.username === "Dank Memer" && msg.author.discriminator === "5192")
-        {
-            await msg.react("🔥");
-            await msg.react("👌");
-            await msg.react("🇩");
-            await msg.react("🇦");
-            await msg.react("🇳");
-            await msg.react("🇰");
-            await msg.react("🇸");
-            await msg.react("🇭");
-            await msg.react("🇮");
-            await msg.react("🇹");
-            await msg.react("💯");
-            return;
-        }
+        // // Dank Memer
+        // else if (msg.author.username === "Dank Memer" && msg.author.discriminator === "5192")
+        // {
+        //     await msg.react("👌");
+        //     await msg.react("🇩");
+        //     await msg.react("🇦");
+        //     await msg.react("🇳");
+        //     await msg.react("🇰");
+        //     await msg.react("💯");
+        //     return;
+        // }
         else ConsoleError('bot', msg.author.username, msg.channel.name)
     },
     HandleHumans: async function (bot, msg)
@@ -185,7 +179,7 @@ function Suggestion(suggestion, author)
             console.log(err);
         else 
             console.log(`${time}: O ${author} έκανε μία πρότασή!`);
-            
+
         console.log(`----------------------------------------------------------------------------------------------------------------------------`);
     });
 }
