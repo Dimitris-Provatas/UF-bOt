@@ -51,17 +51,21 @@ module.exports =
 
             return;
         }
-        // // handle lfg
-        // else if (msg.channel.name.includes("looking-for-guardians"))
-        //     await HandleLFG(msg).then(
-        //         () => { return; },
-        //         () => 
-        //         {
-        //             console.log(`The same dude sent to LFG chat. Dude was ${msg.author.username}.`);
-        //             return;
-        //         }
-        //     );
-        // // suggestions
+        else if (msg.content.split(" ")[0].includes("!doc"))
+        {
+            await HandleDoctor(msg, bot).then(() => { return; });
+        }
+        // handle lfg
+        else if (msg.channel.name.includes("looking-for-guardians") && msg.content.includes("<@&768383690560241684>"))
+            await HandleLFG(msg).then(
+                () => { return; },
+                () => 
+                {
+                    console.log(`The same dude sent to LFG chat. Dude was ${msg.author.username}.`);
+                    return;
+                }
+            );
+        // suggestions
         else
         {
             // Link check
@@ -82,8 +86,8 @@ module.exports =
             // Allow links and emojis
             // ποσο - τοσο joke
             if (
-                msg.content.includes("πόσο") || msg.content.includes("ποσο") || msg.content.includes("Πόσο") || msg.content.includes("Ποσο") || msg.content.includes("ΠΟΣΟ")
-                || msg.content.includes("poso") || msg.content.includes("Poso") || msg.content.includes("POSO")
+                msg.content.includes(" πόσο ") || msg.content.includes(" ποσο ") || msg.content.includes("Πόσο ") || msg.content.includes("Ποσο ") || msg.content.includes(" ΠΟΣΟ ")
+                || msg.content.includes(" poso ") || msg.content.includes("Poso ") || msg.content.includes(" POSO ")
                 )
             {
                 await msg.channel.send(`${msg.author} ΤΟΣΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
@@ -91,11 +95,23 @@ module.exports =
             }
             // ποσα - τοσα joke
             else if (
-                msg.content.includes("πόσα") || msg.content.includes("ποσα") || msg.content.includes("Πόσα") || msg.content.includes("Ποσα") || msg.content.includes("ΠΟΣΑ")
-                || msg.content.includes("posa") || msg.content.includes("Posa") || msg.content.includes("POSA")
+                msg.content.includes(" πόσα ") || msg.content.includes(" ποσα ") || msg.content.includes("Πόσα ") || msg.content.includes("Ποσα ") || msg.content.includes(" ΠΟΣΑ ")
+                || msg.content.includes(" posa ") || msg.content.includes("Posa ") || msg.content.includes(" POSA ")
                 )
             {
                 await msg.channel.send(`${msg.author} ΤΟΣΑ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+                return;
+            }
+            // ποιος - αυτος joke
+            else if (
+                msg.content.includes(" ΠΟΙΟΣ ") ||
+                msg.content.includes(" ποιος ") || msg.content.includes(" ποίος ") || msg.content.includes(" ποιός ") ||
+                msg.content.includes(" ποιοσ ") || msg.content.includes(" ποίοσ ") || msg.content.includes(" ποιόσ ") ||
+                msg.content.includes("Ποιος ") || msg.content.includes("Ποίος ") || msg.content.includes(" Ποιός ") ||
+                msg.content.includes(" poios ") || msg.content.includes("Poios ") || msg.content.includes(" POIOS ")
+                )
+            {
+                await msg.channel.send(`${msg.author} ΑΥΤΟΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
                 return;
             }
             else if (msg.content.includes("<:woah:786165881038307358>"))
@@ -134,7 +150,7 @@ const curses = [
     // Απλά
     "name, άντε γαμήσου ρε μαλάκα!",
     "name, ΡΕ ΦΥΓΕ ΡΕ ΜΑΛΑΚΑ ΑΠΟ ΔΩ ΡΕ ΜΠΡΟ!",
-    "name, δεν έχεις κάποιου άλλου της μπάλες να σπάσεις;",
+    "name, δεν έχεις κάποιου άλλου τις μπάλες να σπάσεις;",
     "name, οι λέξεις δεν πονάνε όσο η κλωτσιά μου. Τώρα σκάσε!",
     "name, τα σκαμπο μου ΚΑΙ ΤΑ ΑΡΧΙΔΙΑ ΜΟΥ!",
     "name, το ξέρω ότι οι γονείς σου δεν σε αγαπάνε, αλλά δεν χρειάζεται να το βγάζεις σε εμάς...",
@@ -151,7 +167,7 @@ const curses = [
     "name, το μόνο flawless που θα βγάλεις θα είναι το server ban με αυτά που βλέπω.",
     "name, ΠΑΜ ΠΑΜ, ΕΠΑΘΕΣ AIDS! Γιατί να πάθουμε και εμείς με αυτά που λες;",
     "name, θα σε απελάσω σκουπίδι… Θα πας πίσω στα Τίρανα!",
-    "name, για κάθε μαλακία που λες, ένας μικρό παχύσαρκο ανήλικο βιάζεται σεξουαλικά από τον αδερφό του!",
+    "name, για κάθε μαλακία που λες, ένα μικρό παχύσαρκο ανήλικο βιάζεται σεξουαλικά από τον αδερφό του!",
     "name, ok boomer!",
     "Για αυτό δεν σε αγαπάει η μάνα σου, name.",
     "name, είσαι στείρος!",
@@ -195,19 +211,32 @@ function GetTime()
     return replaceAll(d.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
 }
 
-// async function HandleLFG(msg)
-// {
-//     if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466" && msg.author.username !== lastLFGSender)
-//     {
-//         await msg.react("🍆");
-//         await msg.channel.send(`Τι λέει ${msg.author}, πάλι κουβάλημα θέλουμε;`);
-//         lastLFGSender = msg.author.username;
-//         console.log(`LastLFGSender: ${lastLFGSender}`);
-//         return Promise.resolve();
-//     }
+async function HandleLFG(msg)
+{
+    if (msg.author.username !== "UF-bOt" && msg.author.discriminator !== "0466" && msg.author.username !== lastLFGSender)
+    {
+        await msg.react("🍆");
+        await msg.channel.send(`Τι λέει ${msg.author}, πάλι κουβάλημα θέλουμε;`);
+        lastLFGSender = msg.author.username;
+        console.log(`LastLFGSender: ${lastLFGSender}`);
+        return Promise.resolve();
+    }
 
-//     return Promise.reject();
-// }
+    return Promise.reject();
+}
+
+async function HandleDoctor(msg, client)
+{
+    const mention = msg.mentions.users.first();
+    const reply = `\
+Γειά σου ${mention}!\ \r\n
+- Σε περίπτωση που δεν βλέπεις καλά, επικοινώνησε με τον οφθαλμίατρο που προτείνουμε:\r\n**\`\`\`Γεώργιος Αυτισματίας\r\nΟδός: Μητρώς 69\r\nTηλέφωνο: 6969420666\`\`\`**\
+- Σε περίπτωση που δεν έχεις εγκέφαλο, είσαι ευπρόσδεκτος σε αυτόν τον σέρβερ: https://discord.gg/cEcy53C\ 
+        `;
+    await msg.channel.send(reply);
+    await msg.delete(1);
+    return Promise.resolve();
+}
 
 async function CurseEverything(msg)
 {
@@ -234,6 +263,12 @@ async function CurseEverything(msg)
         {
             const gif = curse.split(" ")[1];
             curse = { files: [`./src/media/gifs/${gif}.gif`] };
+            await msg.channel.send(msg.author, curse);
+        }
+        else if (curse.includes("image"))
+        {
+            const image = curse.split(" ")[1];
+            curse = { files: [`./src/media/images/${image}`] };
             await msg.channel.send(msg.author, curse);
         }
 

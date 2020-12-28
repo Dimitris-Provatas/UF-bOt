@@ -23,6 +23,7 @@ bot.on('message', async message =>
 {
     if (// General commands
         message.channel.name.includes("music") ||
+        message.channel.name === "moderators" ||
         // Welcome
         message.channel.name === "welcome" ||
         message.channel.name === "rules" ||
@@ -40,8 +41,11 @@ bot.on('message', async message =>
         return;
     else if (message.isMemberMentioned(bot.user))
     {
+        let mention = message.author;
+        if (message.mentions.users.size > 1)
+            mention = message.mentions.users.get(Array.from(message.mentions.users.keys())[1]);
         await message.react("😢");
-        await message.channel.send(`${message.author}, οΙ λΈξεΙς ΠονΆΝε!`);
+        await message.channel.send(`${mention}, οΙ λΈξεΙς ΠονΆΝε!`);
         return;
     }
     else if (message.author.bot)
