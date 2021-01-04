@@ -73,9 +73,38 @@ module.exports =
             // Any message that must not be a link to be proccessed
             if (!msg.content.includes("http") && !msg.content.includes("<:") && !msg.content.includes("<@"))
             {
-                // οκτω 
+                // τρια
                 if (
-                    msg.content.includes("8") || msg.content.includes("οκτω") || msg.content.includes("οκτώ") || msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") || msg.content.includes("οχτω") || msg.content.includes("οχτώ") || msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") || msg.content.includes("okto") || msg.content.includes("Okto") || msg.content.includes("OKTO")
+                    !msg.content.includes(":3") &&
+                    (
+                        msg.content.includes("3") || msg.content.includes(" τρια ") || msg.content.includes(" τρία ") ||
+                        msg.content.includes("Τρια ") || msg.content.includes("ΤΡΙΑ") ||
+                        msg.content.includes("tria ") || msg.content.includes("Tria ") || msg.content.includes("TRIA")
+                    )
+                    )
+                {
+                    await msg.channel.send(`${msg.author} ΤΡΙΑ; ΝΑ ΤΑ ΦΑΣ ΚΑΙ ΝΑ ΕΙΝΑΙ ΚΡΥΑ!`);
+                    return;
+                }
+                // τρεις
+                else if (
+                    msg.content.includes(" τρεις") || msg.content.includes("Τρεις") || msg.content.includes("ΤΡΕΙΣ") ||
+                    msg.content.includes(" τρεισ") || msg.content.includes("Τρεισ") || msg.content.includes("ΤΡΕΙς") ||
+                    msg.content.includes(" treis") || msg.content.includes("Treis") || msg.content.includes("TREIS") ||
+                    msg.content.includes(" tris") || msg.content.includes("Tris") || msg.content.includes("TRIS")
+                    )
+                {
+                    const woah = await bot.emojis.get("786165881038307358");
+                    await msg.channel.send(`${msg.author} ΤΡΕΙΣ ΝΑ ΕΙΝΑΙ ΟΙ ΩΡΕΣ ΣΟΥ! ${woah}`);
+                    return;
+                }
+                // οκτω 
+                else if (
+                    msg.content.includes("8") ||
+                    msg.content.includes(" οκτω") || msg.content.includes(" οκτώ") || msg.content.includes(" οχτω") || msg.content.includes(" οχτώ") ||
+                    msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") ||
+                    msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") ||
+                    msg.content.includes(" okto") || msg.content.includes("Okto") || msg.content.includes("OKTO")
                     )
                 {
                     await msg.channel.send(`${msg.author} ΟΥΧΤΟ; ΤΗΣ ΜΑΝΑΣ ΤΟΝ ΠΡΟΥΧΤΟ!`);
@@ -104,16 +133,64 @@ module.exports =
             }
             // ποιος - αυτος joke
             else if (
-                msg.content.includes(" ΠΟΙΟΣ ") ||
-                msg.content.includes(" ποιος ") || msg.content.includes(" ποίος ") || msg.content.includes(" ποιός ") ||
-                msg.content.includes(" ποιοσ ") || msg.content.includes(" ποίοσ ") || msg.content.includes(" ποιόσ ") ||
-                msg.content.includes("Ποιος ") || msg.content.includes("Ποίος ") || msg.content.includes(" Ποιός ") ||
-                msg.content.includes(" poios ") || msg.content.includes("Poios ") || msg.content.includes(" POIOS ")
+                msg.content.includes("ΠΟΙΟΣ") ||
+                msg.content.includes(" ποιος") || msg.content.includes(" ποίος") || msg.content.includes(" ποιός") ||
+                msg.content.includes(" ποιοσ") || msg.content.includes(" ποίοσ") || msg.content.includes(" ποιόσ") ||
+                msg.content.includes("Ποιος") || msg.content.includes("Ποίος") || msg.content.includes("Ποιός") ||
+                msg.content.includes("Ποιοσ") || msg.content.includes("Ποίοσ") || msg.content.includes("Ποιόσ") ||
+                msg.content.includes(" poios") || msg.content.includes("Poios") || msg.content.includes("POIOS")
                 )
             {
                 await msg.channel.send(`${msg.author} ΑΥΤΟΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
                 return;
             }
+            // ποια - αυτη joke
+            else if (
+                msg.content.includes("ΠΟΙΑ") ||
+                msg.content.includes(" ποια") || msg.content.includes(" ποία") || msg.content.includes(" ποιά") ||
+                msg.content.includes(" Ποια") || msg.content.includes("Ποία") || msg.content.includes("Ποιά") ||
+                msg.content.includes(" poia") || msg.content.includes("Poia") || msg.content.includes("POIA")
+                )
+            {
+                await msg.channel.send(`${msg.author} ΑΥΤΗ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+                return;
+            }
+            // ποιο - αυτο joke
+            else if (
+                msg.content.includes("ΠΟΙΟ") ||
+                msg.content.includes(" ποιο") || msg.content.includes(" ποίο") || msg.content.includes(" ποιό") ||
+                msg.content.includes("Ποιο") || msg.content.includes("Ποίο") || msg.content.includes("Ποιό") ||
+                msg.content.includes(" poio") || msg.content.includes("Poio") || msg.content.includes("POIO")
+                )
+            {
+                await msg.channel.send(`${msg.author} ΑΥΤΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+                return;
+            }
+            // ποιοι - αυτος joke
+            else if (
+                msg.content.includes("ΠΟΙΟΙ") ||
+                msg.content.includes(" ποιοι") || msg.content.includes(" ποίοι") || msg.content.includes(" ποιοί") ||
+                msg.content.includes("Ποιοι") || msg.content.includes("Ποίοι") || msg.content.includes("Ποιοί") ||
+                msg.content.includes(" poioi") || msg.content.includes("Poioi") || msg.content.includes("POIOI")
+                )
+            {
+                await msg.channel.send(`${msg.author} ΑΥΤΟΙ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+                return;
+            }
+            // ποιες - αυτη joke
+            else if (
+                msg.content.includes("ΠΟΙΕΣ") ||
+                msg.content.includes(" ποιες") || msg.content.includes(" ποίες") || msg.content.includes(" ποιές") ||
+                msg.content.includes(" ποιεσ") || msg.content.includes(" ποίεσ") || msg.content.includes(" ποιέσ") ||
+                msg.content.includes("Ποιες") || msg.content.includes("Ποίες") || msg.content.includes("Ποιές") ||
+                msg.content.includes("Ποιεσ") || msg.content.includes("Ποίεσ") || msg.content.includes("Ποιέσ") ||
+                msg.content.includes(" poies") || msg.content.includes("Poies") || msg.content.includes("POIES")
+                )
+            {
+                await msg.channel.send(`${msg.author} ΑΥΤΕΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+                return;
+            }
+            // woah react
             else if (msg.content.includes("<:woah:786165881038307358>"))
             {
                 await msg.react(bot.emojis.get("786165881038307358"));
@@ -172,12 +249,24 @@ const curses = [
     "Για αυτό δεν σε αγαπάει η μάνα σου, name.",
     "name, είσαι στείρος!",
     "name, μάθε να κουνάς πιο γρήγορα το ποντίκι σου πρώτα!",
+    "name, ξέρω ότι το dildo στον κώλο σου σε πονάει, ίσως θα σε ενδιέφεραι να αναβαθμίσεις σε ένα από αυτά: https://bad-dragon.com/",
+    "name, ο Luke Smith έχει πει ηλίθια πράγματα, όπως το equipment sunset, το να φύγουν οι πλανήτες και να βγουν κάποιες supers από το παιχνίδι. ΠΩΣ ΚΑΤΑΦΕΡΕΣ ΝΑ ΤΟΝ ΞΕΠΕΡΑΣΕΙΣ ΣΕ ΗΛΙΘΙΟΤΗΤΑ;",
 
     // Videos
-    "video stfu",
-    "video ur_opinion_does_not_matter",
+    "video stfu.mp4",
+    "video ur_opinion_does_not_matter.mp4",
+    "video not_funny.mp4",
 
     // Gifs
+];
+
+const retardURLs = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
 ];
 
 function ConsoleError(type, user, channel)
@@ -229,11 +318,20 @@ async function HandleDoctor(msg, client)
 {
     const mention = msg.mentions.users.first();
     const reply = `\
-Γειά σου ${mention}!\ \r\n
+Γειά σου ${mention}!\r\n
 - Σε περίπτωση που δεν βλέπεις καλά, επικοινώνησε με τον οφθαλμίατρο που προτείνουμε:\r\n**\`\`\`Γεώργιος Αυτισματίας\r\nΟδός: Μητρώς 69\r\nTηλέφωνο: 6969420666\`\`\`**\
 - Σε περίπτωση που δεν έχεις εγκέφαλο, είσαι ευπρόσδεκτος σε αυτόν τον σέρβερ: https://discord.gg/cEcy53C\ 
         `;
     await msg.channel.send(reply);
+    await msg.delete(1);
+    return Promise.resolve();
+}
+
+async function HandleRetard(msg, client)
+{
+    const mention = msg.mentions.users.first();
+    const reply = `My name is ${mention} and I'm retarded, dahhhhhh!`;
+    await msg.channel.send(reply, {files: ['']});
     await msg.delete(1);
     return Promise.resolve();
 }
@@ -256,7 +354,7 @@ async function CurseEverything(msg)
         else if (curse.includes("video"))
         {
             const video = curse.split(" ")[1];
-            curse = { files: [`./src/media/videos/${video}.mp4`] };
+            curse = { files: [`./src/media/videos/${video}`] };
             await msg.channel.send(msg.author, curse);
         }
         else if (curse.includes("gif"))
