@@ -15,7 +15,7 @@ bot.login(secrets.token);
 
 bot.on('ready', () => {
     const time = handler.GetTime();
-    bot.user.setActivity("gay porn από τους GRT!",
+    bot.user.setActivity("τα gay porn των GRT!",
         {
             type: "WATCHING",
             url: "https://media.discordapp.net/attachments/793589515403001896/793597291168006154/Capture853.PNG?width=484&height=674"
