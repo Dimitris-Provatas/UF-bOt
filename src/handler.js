@@ -220,6 +220,8 @@ const dickheads = [
     "𝓗𝓮𝓵𝓵𝓯𝓪𝓵𝓵𝓮𝓷",
     "StaikoChan",
     "The face of true Carnage",
+    "𝘾𝙚𝙧𝙫𝙚𝙧𝙪𝙨𝙂𝙧",
+    "ℂ𝔢ⓡν𝕖𝐫υรﻮ𝓻",
 ];
 
 const curses = [
@@ -253,6 +255,7 @@ const curses = [
     "name, δεν χρειάζεται να αναπληρώσεις το κενό που άφησε ο Shekiro.",
     "Σε όλους αρέσει να είναι Yu-Gi-Oh players, name, αλλά εσύ φτάνεις στο επίπεδο του Shekiro!",
     "Θα σε έλεγα κακό παίχτη, name, αλλά θα ήταν προσβολή στους κακούς παίχτες να τους υποβιβάσω στο επίπεδο του Shekiro!",
+    "name, υπάρχει λόγος που το Vine πέθανε και αυτός είσαι εσύ!",
 
     // Videos
     "video stfu.mp4",
@@ -318,12 +321,13 @@ async function HandleLFG(msg)
 
 async function HandleDoctor(msg, client)
 {
-    const mention = msg.mentions.users.first();
+    const mention = msg.mentions.users.first() || msg.author;
     const reply = `\
 Γειά σου ${mention}!\r\n
 - Σε περίπτωση που δεν βλέπεις καλά, επικοινώνησε με τον οφθαλμίατρο που προτείνουμε:\r\n**\`\`\`Γεώργιος Αυτισματίας\r\nΟδός: Μητρώς 69\r\nTηλέφωνο: 6969420666\`\`\`**\
-- Σε περίπτωση που δεν έχεις εγκέφαλο, είσαι ευπρόσδεκτος σε αυτόν τον σέρβερ: https://discord.gg/cEcy53C\ 
+- Σε περίπτωση που δεν έχεις εγκέφαλο, είσαι ευπρόσδεκτος σε αυτόν τον σέρβερ: https://discord.gg/cEcy53C\r\n
         `;
+    // - Σε περίπτωση που ο παραπάνω σέρβερ δεν σε καλύπτει, προτείνουμε και αυτόν: https://discord.gg/KJwuW3jBSA\
     await msg.channel.send(reply);
     await msg.delete(1);
     return Promise.resolve();

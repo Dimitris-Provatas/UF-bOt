@@ -1,11 +1,12 @@
 const express = require('express');
-
+const path = require('path');
 const server = express();
 
 const d = new Date();
 
 server.all('/', (req, res)=>{
-    res.send("UF_bot Online!");
+    // res.send("UF_bot Online!");
+    res.sendFile(path.join(__dirname + '/bot.html'));
 })
 
 function keepAlive()
