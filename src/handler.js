@@ -35,19 +35,25 @@ module.exports =
         //     await msg.react("💯");
         //     return;
         // }
-        else ConsoleError('bot', msg.author.username, msg.channel.name)
+        else ConsoleError('bot', msg.author.username, msg.guild, msg.channel.name)
     },
     HandleHumans: async function (bot, msg)
     {
+        // suggestions
         if (msg.content.split(" ")[0].includes("!suggestion"))
         {
-            if (!msg.content.includes("!suggestion "))
-                msg.channel.send(`Να σου πω ρε τόλη ${msg.author}, ψήνεσαι να προτίνεις κάτι;`);
-            else
+            if(noSuggestions.indexOf(msg.author.username) === -1)
             {
-                await Suggestion(msg.content.split("!suggestion ")[1], msg.author.username);
-                await msg.channel.send(`Έγινε φίλε ${msg.author}, η πρότασή σου καταχωρήθηκε!`);
+                if (!msg.content.includes("!suggestion "))
+                    msg.channel.send(`Να σου πω ρε τόλη ${msg.author}, ψήνεσαι να προτίνεις κάτι;`);
+                else
+                {
+                    await Suggestion(msg.content.split("!suggestion ")[1], msg.author.username, msg.guild);
+                    await msg.channel.send(`Έγινε φίλε ${msg.author}, η πρότασή σου καταχωρήθηκε!`);
+                }
             }
+            else
+                await msg.channel.send(`Όχι φίλε ${msg.author}, έχεις σπαμάρει τον κώλο σου και μας έσπασες τα νεύρα!\r\nΔεν έχεις δικαίωμα να ξαναπροτίνεις κάτι!`);
 
             return;
         }
@@ -69,7 +75,6 @@ module.exports =
                     return;
                 }
             );
-        // suggestions
         else
         {
             // Link check
@@ -208,7 +213,7 @@ module.exports =
                 );
         }
         
-        ConsoleError('user', msg.author.username, msg.channel.name)
+        ConsoleError('user', msg.author.username, msg.guild, msg.channel.name)
     }
 }
 
@@ -226,6 +231,10 @@ const dickheads = [
     "The face of true Carnage",
     "𝘾𝙚𝙧𝙫𝙚𝙧𝙪𝙨𝙂𝙧",
     "ℂ𝔢ⓡν𝕖𝐫υรﻮ𝓻",
+];
+
+const noSuggestions = [
+    
 ];
 
 const curses = [
@@ -256,9 +265,9 @@ const curses = [
     "name, μάθε να κουνάς πιο γρήγορα το ποντίκι σου πρώτα!",
     "name, ξέρω ότι το dildo στον κώλο σου σε πονάει, ίσως θα σε ενδιέφεραι να αναβαθμίσεις σε ένα από αυτά: https://bad-dragon.com/",
     "name, ο Luke Smith έχει πει ηλίθια πράγματα, όπως το equipment sunset, το να φύγουν οι πλανήτες και να βγουν κάποιες supers από το παιχνίδι. ΠΩΣ ΚΑΤΑΦΕΡΕΣ ΝΑ ΤΟΝ ΞΕΠΕΡΑΣΕΙΣ ΣΕ ΗΛΙΘΙΟΤΗΤΑ;",
-    "name, δεν χρειάζεται να αναπληρώσεις το κενό που άφησε ο Shekiro.",
-    "Σε όλους αρέσει να είναι Yu-Gi-Oh players, name, αλλά εσύ φτάνεις στο επίπεδο του Shekiro!",
-    "Θα σε έλεγα κακό παίχτη, name, αλλά θα ήταν προσβολή στους κακούς παίχτες να τους υποβιβάσω στο επίπεδο του Shekiro!",
+    // "name, δεν χρειάζεται να αναπληρώσεις το κενό που άφησε ο Shekiro.",
+    // "Σε όλους αρέσει να είναι Yu-Gi-Oh players, name, αλλά εσύ φτάνεις στο επίπεδο του Shekiro!",
+    // "Θα σε έλεγα κακό παίχτη, name, αλλά θα ήταν προσβολή στους κακούς παίχτες να τους υποβιβάσω στο επίπεδο του Shekiro!",
     "name, υπάρχει λόγος που το Vine πέθανε και αυτός είσαι εσύ!",
 
     // Videos
@@ -277,19 +286,20 @@ const retardFiles = [
     "stupid-retarded.gif",
     "spongebob-mocking.gif",
     "down-syndrome-huh.gif",
+    "officer-doofy-salute.gif",
 ];
 
-function ConsoleError(type, user, channel)
+function ConsoleError(type, user, server, channel)
 {
     const time = GetTime();
-    console.log(`${time}: No action taken for ${type} ${user} in channel \'${channel}\'!`);
+    console.log(`${time}: No action taken for ${type} ${user} on server \'${server}\' in channel \'${channel}\'!`);
     console.log(`----------------------------------------------------------------------------------------------------------------------------`);
 }
 
-function Suggestion(suggestion, author)
+function Suggestion(suggestion, author, server)
 {
     const time = GetTime();
-    fs.appendFile(suggestionsFile, `${time}: O ${author} προτίνει: ${suggestion}\r\n`, function (err)
+    fs.appendFile(suggestionsFile, `${time}: O \'${author}\' από τον σέρβερ \'${server}\' προτίνει: ${suggestion}\r\n`, function (err)
     {
         if (err)
             console.log(err);
@@ -353,7 +363,7 @@ async function CurseEverything(msg)
     let curseChance = 95;
     if (dickheads.includes(msg.author.username)) curseChance = 85;
     const roll = Math.floor(Math.random() * 101);
-    await console.log(`Roll: ${msg.author.username} ${msg.channel.name} ${roll}`);
+    await console.log(`Roll: ${msg.author.username} ${roll} | Server: \'${msg.guild}\' | Channel: \'${msg.channel.name}\'`);
 
     if (roll > curseChance)
     {
