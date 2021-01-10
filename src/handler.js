@@ -55,6 +55,10 @@ module.exports =
         {
             await HandleDoctor(msg, bot).then(() => { return; });
         }
+        else if (msg.content.split(" ")[0].includes("!retard"))
+        {
+            await HandleRetard(msg, bot).then(() => { return; });
+        }
         // handle lfg
         else if (msg.channel.name.includes("looking-for-guardians") && msg.content.includes("<@&768383690560241684>"))
             await HandleLFG(msg).then(
@@ -263,15 +267,16 @@ const curses = [
     "video not_funny.mp4",
 
     // Gifs
+
+    // Sounds
+    "sound Deep_Stone_Lullaby_Sveny_-_Speaker.mp3",
 ];
 
-const retardURLs = [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
+const retardFiles = [
+    "idiot-trumpretarded.gif",
+    "stupid-retarded.gif",
+    "spongebob-mocking.gif",
+    "down-syndrome-huh.gif",
 ];
 
 function ConsoleError(type, user, channel)
@@ -295,14 +300,14 @@ function Suggestion(suggestion, author)
     });
 }
 
-function replaceAll(string, search, replace)
+function ReplaceAll(string, search, replace)
 {
     return string.split(search).join(replace);
 }
 
 function GetTime()
 {
-    return replaceAll(d.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
+    return ReplaceAll(d.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
 }
 
 async function HandleLFG(msg)
@@ -335,9 +340,10 @@ async function HandleDoctor(msg, client)
 
 async function HandleRetard(msg, client)
 {
-    const mention = msg.mentions.users.first();
-    const reply = `My name is ${mention} and I'm retarded, dahhhhhh!`;
-    await msg.channel.send(reply, {files: ['']});
+    const mention = msg.mentions.users.first() || msg.author;
+    const reply = `My nAme Is ${mention} aNd I aM rEtaRdED, dahhhhhh!`;
+    const retardFile = "./src/media/retard/" + retardFiles[Math.floor(Math.random() * retardFiles.length)];
+    await msg.channel.send(reply, {files: [retardFile]});
     await msg.delete(1);
     return Promise.resolve();
 }
@@ -366,13 +372,19 @@ async function CurseEverything(msg)
         else if (curse.includes("gif"))
         {
             const gif = curse.split(" ")[1];
-            curse = { files: [`./src/media/gifs/${gif}.gif`] };
+            curse = { files: [`./src/media/gifs/${gif}`] };
             await msg.channel.send(msg.author, curse);
         }
         else if (curse.includes("image"))
         {
             const image = curse.split(" ")[1];
             curse = { files: [`./src/media/images/${image}`] };
+            await msg.channel.send(msg.author, curse);
+        }
+        else if (curse.includes("sound"))
+        {
+            const sound = curse.split(" ")[1];
+            curse = { files: [`./src/media/sound/${sound}`] };
             await msg.channel.send(msg.author, curse);
         }
 
