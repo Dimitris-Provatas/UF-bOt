@@ -236,6 +236,8 @@ module.exports =
                 msg.content.includes("\"message\"")
                 )
             {
+                console.log(`Ο ${msg.author.tag} memeάρει με: ${msg.content}`);
+                console.log("----------------------------------------------------------------------------------------------------------------------------");
                 const payload = JSON.parse(msg.content.split('meme ')[1]);
                 let targetId = false;
                 try {
@@ -247,7 +249,6 @@ module.exports =
                 }
                 if (targetId)
                 {
-                    console.log(`Ο ${msg.author.tag} memeάρει με: ${msg.content}`);
                     await msg.author.send("Σε έχω, στέλνω τώρα!");
                     await bot.users.get(targetId).send(payload.message);
                 }
