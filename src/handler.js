@@ -214,10 +214,92 @@ module.exports =
         }
         
         ConsoleError('user', msg.author.username, msg.guild, msg.channel.name)
+    },
+    HandleDM: async function (bot, msg)
+    {
+        if (msg.author.bot) return;
+
+        // if (!memeWhitelsit.includes(msg.author.tag))
+        // {
+        //      await msg.author.send("Δεν είσαι στην λίστα! Άντε γαμήσου παιδάκι!");
+        //      console.log(`Ο ${msg.author.tag} που δεν είναι στην λίστα το πίστεψε! LOL!`)
+        //      console.log("----------------------------------------------------------------------------------------------------------------------------");
+        //      return;
+        // }
+
+        if (msg.content.startsWith("meme "))
+        {
+            if (
+                msg.content.includes("{") &&
+                msg.content.endsWith("}") &&
+                msg.content.includes("\"target\"") &&
+                msg.content.includes("\"message\"")
+                )
+            {
+                const payload = JSON.parse(msg.content.split('meme ')[1]);
+                let targetId = false;
+                try {
+                    targetId = bot.users.find(u => u.tag === payload.target).id;
+                }
+                catch (err) {
+                    console.log(`O ${msg.author.tag} μου ζήτησε να βρω τον ${payload.target} και δεν το βρήκα.`);
+                    console.log("----------------------------------------------------------------------------------------------------------------------------");
+                }
+                if (targetId)
+                {
+                    console.log(`Ο ${msg.author.tag} memeάρει με: ${msg.content}`);
+                    await msg.author.send("Σε έχω, στέλνω τώρα!");
+                    await bot.users.get(targetId).send(payload.message);
+                }
+                else msg.author.send("Δεν βρήκα τον στόχο. Πρέπει να είναι κάποιος που να έχω πετύχει έστω και μια φορά σε έναν σέρβερ!");
+            }
+            else
+                await msg.author.send("Ρε! Άμα δεν το θυμάσε απ'έξω, γράψε ```help``` και κάντο copy+paste, δεν είναι ντροπή!");
+        }
+        else if (msg.content.toLowerCase().includes("help"))
+        {
+            await msg.author.send('\
+--------------------------------------------------------------------------\r\n\
+| ΟΤΙ ΒΛΕΠΕΙΣ ΕΔΩ ΑΦΟΡΟΥΝ ΑΝ ΚΑΝΕΙΣ PM ΣΕ ΕΜΕΝΑ!!!!! |\r\n\
+--------------------------------------------------------------------------\r\n\
+\r\n\
+- Αν θες να memeάρεις κάποιον, γράψε: ```meme {"target": "Username#1234", "message": "Εδώ μόνο αλλάζεις!"}``` Απαγορεύεται να βάλεις μέσα στο μήνυμά σου τον χαρακτήρα \", γιατί δεν θα δουλέψει!\r\n\
+Από όσο ξέρω, μπορείς να στείλεις μόνο σε άτομα που ήταν σε server που είμαι και εγώ...\r\n\
+-------------------------------------------------------------------------------------------------------------------------------------------\r\n\
+- Αν θες απλά να μιλήσουμε, γράψε το μήνυμά σου. Η συζήτηση για την ώρα είναι με ανθρώπινο παράγοντα, οπότε μπορεί να μην είναι πάντα διαθέσιμη.\
+            ');
+        }
+        else
+        {
+            console.log(`DM from ${msg.author.username}#${msg.author.discriminator}: ${msg.content}`);
+
+            await readline.question(`Will I answer? `, async (answer) =>
+            {
+                if (answer.toLowerCase() === 'yes' || answer.toLowerCase() === "y")
+                {
+                    await readline.question(`What do I reply? `, async (reply) =>
+                    {
+                        await msg.author.send(reply);
+                        readline.close();
+                    });
+                }
+                else
+                {
+                    readline.close();
+                    console.log("Not answering...");
+                    console.log(`----------------------------------------------------------------------------------------------------------------------------`);
+                }
+            });
+        }
     }
 }
 
 // Helper Functions
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
 let lastLFGSender;
 const d = new Date();
 const fs = require('fs');
@@ -236,6 +318,10 @@ const dickheads = [
 const noSuggestions = [
     
 ];
+
+const memeWhitelsit = [
+
+]
 
 const curses = [
     // Απλά
