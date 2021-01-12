@@ -255,7 +255,7 @@ module.exports =
                     async error =>
                     {
                         console.log(error);
-                        await msg.author.send("Κάτι πήγε στραβά και δεν μπόρεσα να παραδώσω το μήνυμα!");
+                        await msg.author.send(`Κάτι πήγε στραβά και δεν μπόρεσα να παραδώσω το μήνυμα! Το πρόβλημα ήταν: \`\`\`${error.name}: ${error.message}\`\`\``);
                     }
                     );
                 }
