@@ -219,13 +219,13 @@ module.exports =
     {
         if (msg.author.bot) return;
 
-        // if (!memeWhitelsit.includes(msg.author.tag))
-        // {
-        //      await msg.author.send("Δεν είσαι στην λίστα! Άντε γαμήσου παιδάκι!");
-        //      console.log(`Ο ${msg.author.tag} που δεν είναι στην λίστα το πίστεψε! LOL!`)
-        //      console.log("----------------------------------------------------------------------------------------------------------------------------");
-        //      return;
-        // }
+        if (!memeWhitelist.includes(msg.author.tag))
+        {
+             await msg.author.send("Δεν είσαι στην λίστα! Άντε γαμήσου παιδάκι!");
+             console.log(`Ο ${msg.author.tag} που δεν είναι στην λίστα το πίστεψε! LOL! Μου είπε: ${msg.content}`);
+             console.log("----------------------------------------------------------------------------------------------------------------------------");
+             return;
+        }
 
         if (msg.content.startsWith("meme "))
         {
@@ -260,9 +260,9 @@ module.exports =
         else if (msg.content.toLowerCase().includes("help"))
         {
             await msg.author.send('\
---------------------------------------------------------------------------\r\n\
-| ΟΤΙ ΒΛΕΠΕΙΣ ΕΔΩ ΑΦΟΡΟΥΝ ΑΝ ΚΑΝΕΙΣ PM ΣΕ ΕΜΕΝΑ!!!!! |\r\n\
---------------------------------------------------------------------------\r\n\
+----------------------------------------------------------------------------------\r\n\
+| ΟΤΙ ΒΛΕΠΕΙΣ ΕΔΩ ΓΙΝΟΝΤΑΙ ΜΟΝΟ ΑΝ ΚΑΝΕΙΣ PM ΣΕ ΕΜΕΝΑ!!!!! |\r\n\
+----------------------------------------------------------------------------------\r\n\
 \r\n\
 - Αν θες να memeάρεις κάποιον, γράψε: ```meme {"target": "Username#1234", "message": "Εδώ μόνο αλλάζεις!"}``` Απαγορεύεται να βάλεις μέσα στο μήνυμά σου τον χαρακτήρα \", γιατί δεν θα δουλέψει!\r\n\
 Από όσο ξέρω, μπορείς να στείλεις μόνο σε άτομα που ήταν σε server που είμαι και εγώ...\r\n\
@@ -272,7 +272,8 @@ module.exports =
         }
         else
         {
-            console.log(`DM from ${msg.author.username}#${msg.author.discriminator}: ${msg.content}`);
+            await msg.author.send(`Γειά σου φίλε ${msg.author.tag}. Άμα δεν σου απαντήσω μετά από αυτό, ενδέχεται ο προγραμματιστής μου να μην είναι online για συζήτηση. Για να δεις τι άλλο μπορείς να κάνεις στα PM μαζί μου, στείλε μου 'help'!`);
+            console.log(`DM from ${msg.author.tag}: ${msg.content}`);
 
             await readline.question(`Will I answer? `, async (answer) =>
             {
@@ -320,8 +321,16 @@ const noSuggestions = [
     
 ];
 
-const memeWhitelsit = [
-
+const memeWhitelist = [
+    "Sheepstress#9964",
+    "OddCoin#1344",
+    "saeko#6666",
+    "Saint-14-TheViolentKing#2277",
+    "Ntouris#1155",
+    "Simpa#7809",
+    "Eniantas#4748",
+    "𝒴𝒪𝒰𝑅𝓃𝒶𝓂𝑒𝐻𝐸𝑅𝐸#3639",
+    "LegendaryReaper#8082",
 ]
 
 const curses = [
@@ -450,7 +459,7 @@ async function CurseEverything(msg)
     let curseChance = 95;
     if (dickheads.includes(msg.author.username)) curseChance = 85;
     const roll = Math.floor(Math.random() * 101);
-    await console.log(`Roll: ${msg.author.username} ${roll} | Server: \'${msg.guild}\' | Channel: \'${msg.channel.name}\'`);
+    await console.log(`Roll: ${msg.author.tag} ${roll} | Server: \'${msg.guild}\' | Channel: \'${msg.channel.name}\'`);
 
     if (roll > curseChance)
     {
