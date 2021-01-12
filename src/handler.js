@@ -8,6 +8,8 @@ module.exports =
         // Ignore self
         if (msg.author.username === "UF-bOt" && msg.author.discriminator === "0466")
         {
+            // if ()
+
             await msg.react("🔥");
             return;
         }

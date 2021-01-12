@@ -80,22 +80,26 @@ bot.on('message', async message =>
         message.channel.name === "mandachord"
         )
         return;
-    else if (message.isMemberMentioned(bot.user))
-    {
-        let mention = message.author;
-        if (message.mentions.users.size > 1)
-            mention = message.mentions.users.get(Array.from(message.mentions.users.keys())[1]);
-        await message.react("😢");
-        await message.channel.send(`${mention}, οΙ λΈξεΙς ΠονΆΝε!`);
-        return;
-    }
+    else if (message.author.bot)
+        await handler.HandleBots(bot, message);
     else if (message.content.toLowerCase() === "uf-help")
     {
         await message.channel.send(helpMsg);
         return;
     }
-    else if (message.author.bot)
-        await handler.HandleBots(bot, message);
+    else if (message.isMemberMentioned(bot.user))
+    {
+        var mention = message.author;
+        var mentions = Array.from(message.mentions.users.keys());
+        if (mentions.includes(bot.user.id) && mentions.length > 0)
+        {
+            mentions = mentions.splice(mentions.indexOf(bot.user), 1);
+            mention = message.mentions.users.get(mentions[mentions.length - 1]);
+        }
+        await message.react("😢");
+        await message.channel.send(`${mention}, οΙ λΈξεΙς ΠονΆΝε!`);
+        return;
+    }
     else
         await handler.HandleHumans(bot, message);
 });
