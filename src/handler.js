@@ -250,9 +250,16 @@ module.exports =
                 if (targetId)
                 {
                     await msg.author.send("Σε έχω, στέλνω τώρα!");
-                    await bot.users.get(targetId).send(payload.message);
+                    await bot.users.get(targetId).send(payload.message).then(
+                    () => {return;},
+                    async error =>
+                    {
+                        console.log(error);
+                        await msg.author.send("Κάτι πήγε στραβά και δεν μπόρεσα να παραδώσω το μήνυμα!");
+                    }
+                    );
                 }
-                else msg.author.send("Δεν βρήκα τον στόχο. Πρέπει να είναι κάποιος που να έχω πετύχει έστω και μια φορά σε έναν σέρβερ!");
+                else msg.author.send("Δεν βρήκα τον στόχο. Πρέπει να είναι κάποιος που να έχω τουλαχιστον έναν σέρβερ κοινό!");
             }
             else
                 await msg.author.send("Ρε! Άμα δεν το θυμάσε απ'έξω, γράψε ```help``` και κάντο copy+paste, δεν είναι ντροπή!");
@@ -272,7 +279,6 @@ module.exports =
         }
         else
         {
-            await msg.author.send(`Γειά σου φίλε ${msg.author.tag}. Άμα δεν σου απαντήσω μετά από αυτό, ενδέχεται ο προγραμματιστής μου να μην είναι online για συζήτηση. Για να δεις τι άλλο μπορείς να κάνεις στα PM μαζί μου, στείλε μου 'help'!`);
             console.log(`DM from ${msg.author.tag}: ${msg.content}`);
 
             await readline.question(`Will I answer? `, async (answer) =>
@@ -284,6 +290,12 @@ module.exports =
                         await msg.author.send(reply);
                         readline.close();
                     });
+                }
+                else if (answer.toLowerCase() === 'explain' || answer.toLowerCase() === 'exp')
+                {
+                    await msg.author.send(`Γειά σου φίλε ${msg.author.tag}. Άμα δεν σου απαντήσω μετά από αυτό, ενδέχεται ο προγραμματιστής μου να μην είναι online για συζήτηση. Για να δεις τι άλλο μπορείς να κάνεις στα PM μαζί μου, στείλε μου 'help'!`);
+                    console.log("Explaining...");
+                    console.log(`----------------------------------------------------------------------------------------------------------------------------`);
                 }
                 else
                 {
