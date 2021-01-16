@@ -8,8 +8,6 @@ module.exports =
         // Ignore self
         if (msg.author.username === "UF-bOt" && msg.author.discriminator === "0466")
         {
-            // if ()
-
             await msg.react("🔥");
             return;
         }
@@ -41,6 +39,16 @@ module.exports =
     },
     HandleHumans: async function (bot, msg)
     {
+        // woah react
+        if (msg.content.includes("<:woah:786165881038307358>"))
+            await msg.react(bot.emojis.get("786165881038307358"));
+        // kekw react
+        if (msg.content.includes("<:KEKW:772571192573296660>"))
+            await msg.react(bot.emojis.get("772571192573296660"));
+        // mara_ara react <:mara_ara:785904138290331688>
+        if (msg.content.includes("<:mara_ara:785904138290331688>"))
+            await msg.react(bot.emojis.get("785904138290331688"));
+
         // suggestions
         if (msg.content.split(" ")[0].includes("!suggestion"))
         {
@@ -155,6 +163,17 @@ module.exports =
                 await msg.channel.send(`${msg.author} ΑΥΤΟΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
                 return;
             }
+            // ποιον - αυτον joke
+            else if (
+                msg.content.includes("ΠΟΙΟΝ") ||
+                msg.content.includes(" ποιον") || msg.content.includes(" ποίον") || msg.content.includes(" ποιόν") ||
+                msg.content.includes("Ποιον") || msg.content.includes("Ποίον") || msg.content.includes("Ποιόν") ||
+                msg.content.includes(" poion") || msg.content.includes("Poion") || msg.content.includes("POION")
+                )
+            {
+                await msg.channel.send(`${msg.author} ΑΥΤΟΝ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+                return;
+            }
             // ποια - αυτη joke
             else if (
                 msg.content.includes("ΠΟΙΑ") ||
@@ -201,17 +220,11 @@ module.exports =
                 await msg.channel.send(`${msg.author} ΑΥΤΕΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
                 return;
             }
-            // woah react
-            else if (msg.content.includes("<:woah:786165881038307358>"))
-            {
-                await msg.react(bot.emojis.get("786165881038307358"));
-                return;
-            }
             // Βρίζει μάνες
             else
                 await CurseEverything(msg).then(
                     () => { return; },  // resolve
-                    () => { console.log("Roll not high enough!"); }  // reject
+                    () => { return; }   // reject
                 );
         }
         
@@ -228,6 +241,44 @@ module.exports =
              console.log("----------------------------------------------------------------------------------------------------------------------------");
              return;
         }
+
+        // if (msg.author.tag === "Sheepstress#9964" && msg.content.startsWith("stats ") && msg.content.includes("#"))
+        // {
+        //     const payload = msg.content.split('stats ')[1];
+        //     var target = false;
+        //     try 
+        //     {
+        //         target = bot.users.find(u => u.tag === payload);
+        //     }
+        //     catch (err) {
+        //         console.log(`O ${msg.author.tag} μου ζήτησε να βρω τον ${payload} και δεν το βρήκα.`);
+        //         console.log("----------------------------------------------------------------------------------------------------------------------------");
+        //     }
+
+        //     if (target)
+        //     {
+        //         const toSend = {
+        //             id: target.id,
+        //             lastMessage: {
+        //                 deleted: target.lastMessage.deleted,
+        //                 content: target.lastMessage.content,
+        //                 mentions: {
+        //                     everyone: target.lastMessage.mentions.everyone,
+        //                     users: target.lastMessage.users || 'none',
+        //                     roles: target.lastMessage.roles || 'none',
+        //                 } || null
+        //             } || null
+        //         };
+
+        //         // console.log(target)
+        //         // console.log(toSend)
+        //         await msg.author.send(`\`\`\`${JSON.stringify(toSend, null, 2)}\`\`\``);
+        //     }
+        //     else
+        //         await msg.author.send("Δεν τον βρήκα αυτόν!");
+
+        //     return;
+        // }
 
         if (msg.content.startsWith("meme "))
         {
@@ -252,13 +303,24 @@ module.exports =
                 if (targetId)
                 {
                     await msg.author.send("Σε έχω, στέλνω τώρα!");
-                    await bot.users.get(targetId).send(payload.message).then(
-                    () => {return;},
-                    async error =>
-                    {
-                        console.log(error);
-                        await msg.author.send(`Κάτι πήγε στραβά και δεν μπόρεσα να παραδώσω το μήνυμα! Το πρόβλημα ήταν: \`\`\`${error.name}: ${error.message}\`\`\``);
-                    }
+                    await bot.users.get(targetId).send(escape(payload.message))
+                    .then(
+                        () =>
+                        {
+                            const time = GetTime();
+                            fs.appendFile(memingFile, `${time}: O \'${msg.author.tag}\' memeάρει με: ${msg.content}\r\n`, function (err)
+                            {
+                                if (err)
+                                    console.log(err);
+                            });
+                            return;
+                        },
+                        async error =>
+                        {
+                            console.log(error);
+                            console.log("----------------------------------------------------------------------------------------------------------------------------");
+                            await msg.author.send(`Κάτι πήγε στραβά και δεν μπόρεσα να παραδώσω το μήνυμα! Το πρόβλημα ήταν: \`\`\`${error.name}: ${error.message}\`\`\``);
+                        }
                     );
                 }
                 else msg.author.send("Δεν βρήκα τον στόχο. Πρέπει να είναι κάποιος που να έχω τουλαχιστον έναν σέρβερ κοινό!");
@@ -274,7 +336,7 @@ module.exports =
 ----------------------------------------------------------------------------------\r\n\
 \r\n\
 - Αν θες να memeάρεις κάποιον, γράψε: ```meme {"target": "Username#1234", "message": "Εδώ μόνο αλλάζεις!"}``` Απαγορεύεται να βάλεις μέσα στο μήνυμά σου τον χαρακτήρα \", γιατί δεν θα δουλέψει!\r\n\
-Από όσο ξέρω, μπορείς να στείλεις μόνο σε άτομα που ήταν σε server που είμαι και εγώ...\r\n\
+Από όσο ξέρω, μπορείς να στείλεις μόνο σε άτομα που είναι σε server που είμαι και εγώ...\r\n\
 -------------------------------------------------------------------------------------------------------------------------------------------\r\n\
 - Αν θες απλά να μιλήσουμε, γράψε το μήνυμά σου. Η συζήτηση για την ώρα είναι με ανθρώπινο παράγοντα, οπότε μπορεί να μην είναι πάντα διαθέσιμη.\
             ');
@@ -285,7 +347,7 @@ module.exports =
 
             await readline.question(`Will I answer? `, async (answer) =>
             {
-                if (answer.toLowerCase() === 'yes' || answer.toLowerCase() === "y")
+                if (answer.toLowerCase() === 'yes' || answer.toLowerCase() === "y" || answer.toLowerCase() === 'ναι' || answer.toLowerCase() === "ν")
                 {
                     await readline.question(`What do I reply? `, async (reply) =>
                     {
@@ -293,14 +355,15 @@ module.exports =
                         readline.close();
                     });
                 }
-                else if (answer.toLowerCase() === 'explain' || answer.toLowerCase() === 'exp')
+                else if (answer.toLowerCase() === 'explain' || answer.toLowerCase() === 'exp' || answer.toLowerCase() === 'εξηγηση' || answer.toLowerCase() === 'εξ')
                 {
-                    await msg.author.send(`Γειά σου φίλε ${msg.author.tag}. Άμα δεν σου απαντήσω μετά από αυτό, ενδέχεται ο προγραμματιστής μου να μην είναι online για συζήτηση. Για να δεις τι άλλο μπορείς να κάνεις στα PM μαζί μου, στείλε μου 'help'!`);
+                    await msg.author.send(`Γειά σου φίλε ${msg.author.tag}. Ενδέχεται ο προγραμματιστής μου να μην είναι διαθέσιμος για συζήτηση. Για να δεις τι άλλο μπορείς να κάνεις στα PM μαζί μου, στείλε μου 'help'!`);
                     console.log("Explaining...");
                     console.log(`----------------------------------------------------------------------------------------------------------------------------`);
                 }
                 else
                 {
+                    await msg.author.send("Μην περιμένεις απάντηση!");
                     readline.close();
                     console.log("Not answering...");
                     console.log(`----------------------------------------------------------------------------------------------------------------------------`);
@@ -320,6 +383,7 @@ let lastLFGSender;
 const d = new Date();
 const fs = require('fs');
 const suggestionsFile = "./src/suggestions.txt";
+const memingFile = "./src/meming.txt"
 
 const dickheads = [
     "Daddy Gelt",
@@ -379,13 +443,18 @@ const curses = [
     // "Σε όλους αρέσει να είναι Yu-Gi-Oh players, name, αλλά εσύ φτάνεις στο επίπεδο του Shekiro!",
     // "Θα σε έλεγα κακό παίχτη, name, αλλά θα ήταν προσβολή στους κακούς παίχτες να τους υποβιβάσω στο επίπεδο του Shekiro!",
     "name, υπάρχει λόγος που το Vine πέθανε και αυτός είσαι εσύ!",
+    "name, βγάζεις το 'τ' από το 'ταυτίζομαι'!",
 
     // Videos
     "video stfu.mp4",
     "video ur_opinion_does_not_matter.mp4",
     "video not_funny.mp4",
+    "video can_you_shut.mp4",
 
     // Gifs
+
+    // Images
+    "image wut.jpgConcattedrale di santa Maria Assunta",
 
     // Sounds
     "sound Deep_Stone_Lullaby_Sveny_-_Speaker.mp3",
@@ -471,7 +540,7 @@ async function HandleRetard(msg, client)
 async function CurseEverything(msg)
 {
     let curseChance = 95;
-    if (dickheads.includes(msg.author.username)) curseChance = 85;
+    if (dickheads.includes(msg.author.username)) curseChance = 90;
     const roll = Math.floor(Math.random() * 101);
     await console.log(`Roll: ${msg.author.tag} ${roll} | Server: \'${msg.guild}\' | Channel: \'${msg.channel.name}\'`);
 

@@ -22,10 +22,11 @@ Beep-Boop!\r\n\
 - Χρησιμοποίησε το !retard με ένα mention, για να δείξεις σε κάποιον ότι έχει νοητική στέρηση!\r\n\
 - Χρησιμοποίησε το !doc με ένα mention, για να δώσεις καλές συμβουλές σε κάποιον με νοητική στέρηση!\r\n\
 - Κάνε με mention με έναν ακόμα για να του δείξω πως οι λέξεις πονάνε!\r\n\
+- Στείλε μου PM, ποτέ δεν ξέρεις ;)\r\n\
 \r\n\
 Αν έχεις κάποια πρόταση να γίνω καλύτερο, σου γαμάω, είμαι ήδη τέλειο. Αλλά άμα έχεις κάποια πρόταση να βρίζω κόσμο με νέους τρόπους, χρησιμοποίησε το !suggestion και μετά γράψε το μήνυμα σου.\r\n\
 Επειδή όμως ο προγραμματιστής μου δεν έχει όρεξη να αντιμετωπίζει μπούρδες, έχω κάποιους κανόνες:\r\n\
-1) Δεν σπαμάρεις μαλακίες. Ξέρουμε και ποιος είσαι και πότε έγραψες την μαλακία σου.\r\n\
+1) Δεν σπαμάρεις μαλακίες. Ξέρουμε και ποιος είσαι και πότε έγραψες την μαλακία σου, οπότε εύκολα δεν σου επιτρέπουμε να ξαναγράψεις.\r\n\
 2) Για να προτίνεις βρισιές, παίζεις μπάλα ως εξής:\r\n\
     - Η πρόταση σου κάπου μέσα της πρέπει να έχει την λέξη 'name', την αντικαθηστώ με το mention.\r\n\
     - Αν θες να έχει αρχείο, πρέπει να μου στείλεις link για να κατεβάσω το αρχείο. Τα αρχεία δεν χρειάζονται πρόταση, μόνο το link.\r\n\
@@ -45,20 +46,25 @@ bot.on('ready', () => {
             url: "https://media.discordapp.net/attachments/793589515403001896/793597291168006154/Capture853.PNG?width=484&height=674"
         });
     console.info(`${time}: Logged in as ${bot.user.tag}!`);
-    console.log(`____________________________________________________________________________________________________________________________`);
-    console.log("| Servers: ")
+    console.log(`__________________________________________________`);
+    console.log(`| Server Count: ${bot.guilds.size - 1}`.padEnd(49, " ") + '|');
+    console.log('+------------------------------------------------+');
+    console.log("| Servers: ".padEnd(49, " ") + "|");
     bot.guilds.forEach(server =>
     {
-        console.log(`| - ${server.name}`);
+        if (server.name === "Bot Test") return;
+
+        const serverName = `| - ${server.name}`.padEnd(49, " ") + "|";
+
+        console.log(serverName);
         serverCount += 1;
     });
-    console.log('-----------------------');
-    console.log(`> Server Count: ${serverCount.toString().padStart(5, "0")} <`)
-    console.log(`----------------------------------------------------------------------------------------------------------------------------`);
+    console.log('+------------------------------------------------+');
 });
 
 bot.on('message', async message =>
 {
+    // console.log(message.content);
     if (message.channel.type == "dm")
         await handler.HandleDM(bot, message);
     else if (// General commands
@@ -82,8 +88,11 @@ bot.on('message', async message =>
         return;
     else if (message.author.bot)
         await handler.HandleBots(bot, message);
-    else if (message.content.toLowerCase() === "uf-help")
+    else if (message.content.toLowerCase() === "uf-help" || message.content.toLowerCase() === "uf-help hide")
     {
+        if (message.content.toLowerCase().includes('hide'))
+            await message.delete(1);
+
         await message.channel.send(helpMsg);
         return;
     }
@@ -91,10 +100,18 @@ bot.on('message', async message =>
     {
         var mention = message.author;
         var mentions = Array.from(message.mentions.users.keys());
-        if (mentions.includes(bot.user.id) && mentions.length > 0)
+        while (mentions.includes(bot.user.id))
         {
-            mentions = mentions.splice(mentions.indexOf(bot.user), 1);
-            mention = message.mentions.users.get(mentions[mentions.length - 1]);
+            if (mentions.length === 1)
+                mentions = [];
+            else
+                mentions = mentions.splice(mentions.indexOf(bot.user.id) - 1, 1);
+
+
+            if (mentions.length > 0)
+                mention = message.mentions.users.get(mentions[mentions.length - 1]);
+            else
+                mention = message.author;
         }
         await message.react("😢");
         await message.channel.send(`${mention}, οΙ λΈξεΙς ΠονΆΝε!`);
