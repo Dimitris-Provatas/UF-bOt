@@ -45,7 +45,7 @@ module.exports =
         // kekw react
         if (msg.content.includes("<:KEKW:772571192573296660>"))
             await msg.react(bot.emojis.get("772571192573296660"));
-        // mara_ara react <:mara_ara:785904138290331688>
+        // mara_ara react
         if (msg.content.includes("<:mara_ara:785904138290331688>"))
             await msg.react(bot.emojis.get("785904138290331688"));
 
@@ -380,7 +380,6 @@ const readline = require('readline').createInterface({
 })
 
 let lastLFGSender;
-const d = new Date();
 const fs = require('fs');
 const suggestionsFile = "./src/suggestions.txt";
 const memingFile = "./src/meming.txt"
@@ -444,6 +443,7 @@ const curses = [
     // "Θα σε έλεγα κακό παίχτη, name, αλλά θα ήταν προσβολή στους κακούς παίχτες να τους υποβιβάσω στο επίπεδο του Shekiro!",
     "name, υπάρχει λόγος που το Vine πέθανε και αυτός είσαι εσύ!",
     "name, βγάζεις το 'τ' από το 'ταυτίζομαι'!",
+    "name, βρήκα αυτό στο search history σου, έχεις να πεις κάτι;\r\ntime: https://media1.tenor.com/images/afd69dfcc511c9617553581c2da8947f/tenor.gif?itemid=8085185",
 
     // Videos
     "video stfu.mp4",
@@ -496,6 +496,7 @@ function ReplaceAll(string, search, replace)
 
 function GetTime()
 {
+    var d = new Date();
     return ReplaceAll(d.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
 }
 
@@ -542,7 +543,7 @@ async function CurseEverything(msg)
     let curseChance = 95;
     if (dickheads.includes(msg.author.username)) curseChance = 90;
     const roll = Math.floor(Math.random() * 101);
-    await console.log(`Roll: ${msg.author.tag} ${roll} | Server: \'${msg.guild}\' | Channel: \'${msg.channel.name}\'`);
+    await console.log(`Roll: ${msg.author.tag} ${roll} | Response: ${roll > curseChance} | Server: \'${msg.guild}\' | Channel: \'${msg.channel.name}\'`);
 
     if (roll > curseChance)
     {
@@ -550,6 +551,17 @@ async function CurseEverything(msg)
         if (curse.includes("name"))
         {
             curse = curse.replace("name", msg.author);
+
+            if (curse.includes("time"))
+            {
+                var date = new Date();
+                // date = date.setDate(date.getDate - 1);
+                date = ReplaceAll(date.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
+                date = date.split('.')[0];
+
+                curse = curse.replace('time', date);
+            }
+
             await msg.channel.send(curse);
         }
         else if (curse.includes("video"))
