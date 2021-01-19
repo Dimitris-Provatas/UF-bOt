@@ -8,19 +8,18 @@ const bot = new Discord.Client();
 
 const handler = require('./handler');
 
-const d = new Date();
-
-keepAlive();
-bot.login(secrets.token);
+bot.login(secrets.token).then(
+    () => {},
+    error => { console.log(error); }
+);
 
 bot.on('ready', () => {
     const time = handler.GetTime();
-    var serverCount = 0;
     bot.user.setActivity("τα gay porn των GRT!",
-        {
-            type: "WATCHING",
-            url: "https://media.discordapp.net/attachments/793589515403001896/793597291168006154/Capture853.PNG?width=484&height=674"
-        });
+    {
+        type: "WATCHING",
+    });
+    keepAlive();
     console.info(`${time}: Logged in as ${bot.user.tag}!`);
     console.log(`__________________________________________________`);
     console.log(`| Server Count: ${bot.guilds.size - 1}`.padEnd(49, " ") + '|');
@@ -31,9 +30,6 @@ bot.on('ready', () => {
         if (server.name === "Bot Test") return;
 
         const serverName = `| - ${server.name}`.padEnd(49, " ") + "|";
-
-        console.log(serverName);
-        serverCount += 1;
     });
     console.log('+------------------------------------------------+');
 });

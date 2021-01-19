@@ -517,24 +517,36 @@ async function HandleLFG(msg)
 async function HandleDoctor(msg, client)
 {
     const mention = msg.mentions.users.first() || msg.author;
-    const reply = `\
+
+    if (mention.username + "#" + mention.discriminator === "Sheepstress#9964")
+        await msg.channel.send(`Άκουσε καλά παιδάκι ${msg.author}, τον προγραμματιστή που με έφτιαξε δεν θα τον πιάνεις στο στόμα σου!`);
+    else
+    {
+        const reply = `\
 Γειά σου ${mention}!\r\n
 - Σε περίπτωση που δεν βλέπεις καλά, επικοινώνησε με τον οφθαλμίατρο που προτείνουμε:\r\n**\`\`\`Γεώργιος Αυτισματίας\r\nΟδός: Μητρώς 69\r\nTηλέφωνο: 6969420666\`\`\`**\
 - Σε περίπτωση που δεν έχεις εγκέφαλο, είσαι ευπρόσδεκτος σε αυτόν τον σέρβερ: https://discord.gg/cEcy53C\r\n
 - Σε περίπτωση που ο παραπάνω σέρβερ δεν σε καλύπτει, προτείνουμε και αυτόν: https://discord.gg/KJwuW3jBSA\
         `;
-    await msg.channel.send(reply);
-    await msg.delete(1);
+        await msg.channel.send(reply);
+        await msg.delete(1);
+    }
     return Promise.resolve();
 }
 
 async function HandleRetard(msg, client)
 {
     const mention = msg.mentions.users.first() || msg.author;
-    const reply = `My nAme Is ${mention} aNd I aM rEtaRdED, dahhhhhh!`;
-    const retardFile = "./src/media/retard/" + retardFiles[Math.floor(Math.random() * retardFiles.length)];
-    await msg.channel.send(reply, {files: [retardFile]});
-    await msg.delete(1);
+    
+    if (mention.username + "#" + mention.discriminator === "Sheepstress#9964")
+        await msg.channel.send(`Άκουσε καλά παιδάκι ${msg.author}, τον προγραμματιστή που με έφτιαξε δεν θα τον πιάνεις στο στόμα σου!`);
+    else
+    {
+        const reply = `My nAme Is ${mention} aNd I aM rEtaRdED, dahhhhhh!`;
+        const retardFile = "./src/media/retard/" + retardFiles[Math.floor(Math.random() * retardFiles.length)];
+        await msg.channel.send(reply, {files: [retardFile]});
+        await msg.delete(1);
+    }
     return Promise.resolve();
 }
 

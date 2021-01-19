@@ -1,17 +1,16 @@
 {
-  "name": "discord-bot",
+  "name": "UF-B0t",
   "version": "1.0.0",
-  "description": "Discord bot for SitePoint",
+  "description": "UF-B0t",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
     "watch": "npx nodemon src/index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Sheepstress",
   "dependencies": {
-    "discord.js": "^11.5.1",
-    "dotenv": "^8.2.0",
+    "@discordjs/opus": "^0.3.3",
+    "discord.js": "^11.6.4",
     "express": "^4.17.1"
   },
   "devDependencies": {
