@@ -450,6 +450,7 @@ const curses = [
     "video ur_opinion_does_not_matter.mp4",
     "video not_funny.mp4",
     "video can_you_shut.mp4",
+    "video hug.mp4",
 
     // Gifs
 

@@ -4,8 +4,7 @@
   "description": "UF-B0t",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "watch": "npx nodemon src/index.js"
+    "start": "node src/index.js"
   },
   "author": "Sheepstress",
   "dependencies": {
