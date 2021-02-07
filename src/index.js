@@ -13,13 +13,13 @@ bot.login(secrets.token).then(
     error => { console.log(error); }
 );
 
-bot.on('ready', () => {
+bot.on('ready', async () => {
     const time = handler.GetTime();
     bot.user.setActivity("τα gay porn των GRT!",
     {
         type: "WATCHING",
     });
-    keepAlive();
+    await keepAlive();
     console.info(`${time}: Logged in as ${bot.user.tag}!`);
     console.log(`__________________________________________________`);
     console.log(`| Server Count: ${bot.guilds.size - 1}`.padEnd(49, " ") + '|');
@@ -29,9 +29,13 @@ bot.on('ready', () => {
     {
         if (server.name === "Bot Test") return;
 
-        const serverName = `| - ${server.name}`.padEnd(49, " ") + "|";
+        console.log(`| - ${server.name}`.padEnd(49, " ") + "|");;
     });
     console.log('+------------------------------------------------+');
+});
+
+bot.on('guildCreate', guild => {
+  guild.systemChannel.send("Γεια! Καλώς ήρθα. Καλά να είμαστε, καλά να περνάμε! Το δεύτερο θα το φροντίσω εγώ! :smiling_face_with_3_hearts: ");
 });
 
 bot.on('message', async message =>
@@ -70,23 +74,14 @@ bot.on('message', async message =>
     }
     else if (message.isMemberMentioned(bot.user))
     {
-        var mention = message.author;
-        var mentions = Array.from(message.mentions.users.keys());
-        while (mentions.includes(bot.user.id))
+        const mention = handler.GetMentions(bot, message);
+        if (mention.username + "#" + mention.discriminator === "Sheepstress#9964")
+            await message.channel.send(`Άκουσε καλά παιδάκι ${message.author}, τον προγραμματιστή που με έφτιαξε δεν θα τον πιάνεις στο στόμα σου, οΙ λΈξεΙς ΠονΆΝε!`);
+        else
         {
-            if (mentions.length === 1)
-                mentions = [];
-            else
-                mentions = mentions.splice(mentions.indexOf(bot.user.id) - 1, 1);
-
-
-            if (mentions.length > 0)
-                mention = message.mentions.users.get(mentions[mentions.length - 1]);
-            else
-                mention = message.author;
+            await message.react("😢");
+            await message.channel.send(`${mention}, οΙ λΈξεΙς ΠονΆΝε!`);
         }
-        await message.react("😢");
-        await message.channel.send(`${mention}, οΙ λΈξεΙς ΠονΆΝε!`);
         return;
     }
     else

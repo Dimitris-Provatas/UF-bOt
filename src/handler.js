@@ -3,6 +3,9 @@ module.exports =
     GetTime: function () {
         return GetTime();
     },
+    GetMentions: function (bot, msg) {
+        return GetMentions(bot, msg);
+    },
     HandleBots: async function (bot, msg)
     {
         // Ignore self
@@ -70,13 +73,58 @@ module.exports =
         else if (msg.content.split(" ")[0].includes("!doc"))
         {
             await HandleDoctor(msg, bot).then(() => { return; });
+            return;
         }
         else if (msg.content.split(" ")[0].includes("!retard"))
         {
             await HandleRetard(msg, bot).then(() => { return; });
+            return;
+        }
+        // Μπαμπης
+        else if (msg.author.tag === "𝒴𝒪𝒰𝑅𝓃𝒶𝓂𝑒𝐻𝐸𝑅𝐸#3639" && (msg.content.toLowerCase().includes("eye") || msg.content.toLowerCase().includes("mati") || msg.content.toLowerCase().includes("μάτι") || msg.content.toLowerCase().includes("ματι")))
+        {
+            await http.get(`https://b9bv2wd97h.execute-api.us-west-2.amazonaws.com/prod/api/player/4611686018484454376`, async res =>
+            {
+                let data = '';
+
+                // A chunk of data has been received.
+                res.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                res.on('end', async () => {
+                    const mpamphs = JSON.parse(data);
+                    const activities = mpamphs.response.activities;
+                    const dsc = activities.find(a => a.activityHash === 910380154);
+                    const clears = dsc.values.clears;
+
+                    await msg.channel.send(`${msg.author}, ${clears} DSC runs and counting απ' ότι βλέπω βρωμιάρη!`);
+                });
+            }).on("error", (err) => {
+                console.log("Error: " + err.message)
+            });
+            return;
+        }
+        // μάνα
+        else if (
+            msg.content.toLowerCase().includes("μάνα σου") || msg.content.toLowerCase().includes("μανα σου") || msg.content.toLowerCase().includes("mana sou") || msg.content.toLowerCase().includes("mana soy") ||
+            msg.content.toLowerCase().includes("μάνας σου") || msg.content.toLowerCase().includes("μανας σου") || msg.content.toLowerCase().includes("μάνασ σου") || msg.content.toLowerCase().includes("μανασ σου") || msg.content.toLowerCase().includes("manas sou") || msg.content.toLowerCase().includes("manas soy") ||
+            msg.content.toLowerCase().includes("μάνα του") || msg.content.toLowerCase().includes("μανα του") || msg.content.toLowerCase().includes("mana tou") || msg.content.toLowerCase().includes("mana toy") ||
+            msg.content.toLowerCase().includes("μάνας του") || msg.content.toLowerCase().includes("μανας του") || msg.content.toLowerCase().includes("μάνασ του") || msg.content.toLowerCase().includes("μανασ του") || msg.content.toLowerCase().includes("manas tou") || msg.content.toLowerCase().includes("manas toy")
+        )
+        {
+            var text = `ΤΙ ΕΙΠΕ ΓΙΑ ΤΗΝ ΜΑΝΑ ΣΟΥ!!!`;
+            const mention = GetMentions(bot, msg);
+
+            if (mention !== msg.author) text =`${mention}, ${text}`;
+
+            await msg.channel.send(text);
+            return;
         }
         // handle lfg
         else if (msg.channel.name.includes("looking-for-guardians") && msg.content.includes("<@&768383690560241684>"))
+        {
             await HandleLFG(msg).then(
                 () => { return; },
                 () => 
@@ -85,6 +133,9 @@ module.exports =
                     return;
                 }
             );
+
+            return;
+        }
         else
         {
             // Link check
@@ -224,11 +275,11 @@ module.exports =
             else
                 await CurseEverything(msg).then(
                     () => { return; },  // resolve
-                    () => { return; }   // reject
+                    () => { ConsoleError('user', msg.author.username, msg.guild, msg.channel.name) }   // reject
                 );
         }
         
-        ConsoleError('user', msg.author.username, msg.guild, msg.channel.name)
+        return;
     },
     HandleDM: async function (bot, msg)
     {
@@ -327,6 +378,8 @@ module.exports =
             }
             else
                 await msg.author.send("Ρε! Άμα δεν το θυμάσε απ'έξω, γράψε ```help``` και κάντο copy+paste, δεν είναι ντροπή!");
+
+            return;
         }
         else if (msg.content.toLowerCase().includes("help"))
         {
@@ -340,6 +393,8 @@ module.exports =
 -------------------------------------------------------------------------------------------------------------------------------------------\r\n\
 - Αν θες απλά να μιλήσουμε, γράψε το μήνυμά σου. Η συζήτηση για την ώρα είναι με ανθρώπινο παράγοντα, οπότε μπορεί να μην είναι πάντα διαθέσιμη.\
             ');
+
+            return;
         }
         else
         {
@@ -369,6 +424,8 @@ module.exports =
                     console.log(`----------------------------------------------------------------------------------------------------------------------------`);
                 }
             });
+
+            return;
         }
     }
 }
@@ -383,6 +440,7 @@ let lastLFGSender;
 const fs = require('fs');
 const suggestionsFile = "./src/suggestions.txt";
 const memingFile = "./src/meming.txt"
+const http = require('https');
 
 const dickheads = [
     "Daddy Gelt",
@@ -427,7 +485,7 @@ const curses = [
     "name, αν το ξαναπείς αυτό θα σου μπιπ το τρίκι τρίκι!",
     "name, μακάρι να σε κάνουν ban μετά από αυτό.",
     "name, ΣΟΥ ΕΎΧΟΜΑΙ ΝΑ ΣΕ ΚΆΝΟΥΝ ΌΛΟΙ REPORT!",
-    "name, is time for your pee pee poo poo check.",
+    "name, it's time for your pee pee poo poo check.",
     "name, το μόνο flawless που θα βγάλεις θα είναι το server ban με αυτά που βλέπω.",
     "name, ΠΑΜ ΠΑΜ, ΕΠΑΘΕΣ AIDS! Γιατί να πάθουμε και εμείς με αυτά που λες;",
     "name, θα σε απελάσω σκουπίδι… Θα πας πίσω στα Τίρανα!",
@@ -443,14 +501,18 @@ const curses = [
     // "Θα σε έλεγα κακό παίχτη, name, αλλά θα ήταν προσβολή στους κακούς παίχτες να τους υποβιβάσω στο επίπεδο του Shekiro!",
     "name, υπάρχει λόγος που το Vine πέθανε και αυτός είσαι εσύ!",
     "name, βγάζεις το 'τ' από το 'ταυτίζομαι'!",
-    "name, βρήκα αυτό στο search history σου, έχεις να πεις κάτι;\r\ntime: https://media1.tenor.com/images/afd69dfcc511c9617553581c2da8947f/tenor.gif?itemid=8085185",
+    "name, βρήκα αυτό στο search history σου, έχεις να πεις κάτι;\r\ndatetime: https://media1.tenor.com/images/afd69dfcc511c9617553581c2da8947f/tenor.gif?itemid=8085185",
 
     // Videos
     "video stfu.mp4",
+    "video stfu_2.mp4",
+    "video go_fuck_your_self.mp4",
     "video ur_opinion_does_not_matter.mp4",
     "video not_funny.mp4",
     "video can_you_shut.mp4",
     "video hug.mp4",
+    "video so_retarded.mp4",
+    "annoying_ass.mp4",
 
     // Gifs
 
@@ -499,6 +561,31 @@ function GetTime()
 {
     var d = new Date();
     return ReplaceAll(d.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
+}
+
+function GetMentions(bot, msg)
+{
+    var mention = msg.author;
+    var mentions = Array.from(msg.mentions.users.keys());
+
+    if (mentions.length > 0)
+        mention = msg.mentions.users.get(mentions[mentions.length - 1]);
+
+    while (mentions.includes(bot.user.id))
+    {
+        if (mentions.length === 1)
+            mentions = [];
+        else
+            mentions = mentions.splice(mentions.indexOf(bot.user.id) - 1, 1);
+
+
+        if (mentions.length > 0)
+            mention = msg.mentions.users.get(mentions[mentions.length - 1]);
+        else
+            mention = msg.author;
+    }
+
+    return mention;
 }
 
 async function HandleLFG(msg)
@@ -565,14 +652,14 @@ async function CurseEverything(msg)
         {
             curse = curse.replace("name", msg.author);
 
-            if (curse.includes("time"))
+            if (curse.includes("datetime"))
             {
                 var date = new Date();
                 // date = date.setDate(date.getDate - 1);
                 date = ReplaceAll(date.toISOString().replace("T", " ").replace("Z", ""), "-", "/");
                 date = date.split('.')[0];
 
-                curse = curse.replace('time', date);
+                curse = curse.replace('datetime', date);
             }
 
             await msg.channel.send(curse);
