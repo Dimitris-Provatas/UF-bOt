@@ -42,6 +42,35 @@ module.exports =
     },
     HandleHumans: async function (bot, msg)
     {
+        const message = msg.content.split(" ");
+
+        // clear
+        if (message[0].includes("uf-clear"))
+        {
+            const owner = msg.guild.roles.find(role => role.name === 'Server Owner');
+            const mods = msg.guild.roles.find(role => role.name === 'Moderators');
+
+            if (msg.member.roles.find(role => role.name === 'Server Owner') || msg.member.roles.find(role => role.name === 'Moderators'))
+            {
+                if (!message[1] || isNaN(message[1]))
+                {
+                    const reply = await msg.channel.send(`${msg.author} πρέπει να βάλεις και έναν αριθμό μετά, για να ξέρω πόσα να σβήσω (max: 100)!`);
+                    await msg.delete(15000);
+                    await reply.delete(1);
+                }
+                else
+                {
+                    await msg.delete(1);
+                    const toDelete = await msg.channel.fetchMessages({limit: parseInt(message[1])});
+                    await msg.channel.bulkDelete(toDelete);
+                }
+            }
+            else
+                msg.channel.send(`Έξυπνος φίλε ${msg.author}, θα ήταν κρίμα να μάθουν οι ${mods} και ο ${owner} ότι πήγες να κάνεις κάτι τέτοιο!`);
+
+            return;
+        }
+
         // woah react
         if (msg.content.includes("<:woah:786165881038307358>"))
             await msg.react(bot.emojis.get("786165881038307358"));
