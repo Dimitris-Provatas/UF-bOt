@@ -80,10 +80,15 @@ module.exports =
             await HandleRetard(msg, bot).then(() => { return; });
             return;
         }
-        // Μπαμπης
-        else if (msg.author.tag === "𝒴𝒪𝒰𝑅𝓃𝒶𝓂𝑒𝐻𝐸𝑅𝐸#3639" && (msg.content.toLowerCase().includes("eye") || msg.content.toLowerCase().includes("mati") || msg.content.toLowerCase().includes("μάτι") || msg.content.toLowerCase().includes("ματι")))
+        else if (msg.content.split(" ")[0].includes("!reverse"))
         {
-            await http.get(`https://b9bv2wd97h.execute-api.us-west-2.amazonaws.com/prod/api/player/4611686018484454376`, async res =>
+            await HandleReverse(msg, bot).then(() => { return; });
+            return;
+        }
+        // Μπαμπης
+        else if (msg.author.tag === "Sheepstress#9964" && (msg.content.toLowerCase().includes("eye") || msg.content.toLowerCase().includes("mati") || msg.content.toLowerCase().includes("μάτι") || msg.content.toLowerCase().includes("ματι")))
+        {
+            await http.get(`https://b9bv2wd97h.execute-api.us-west-2.amazonaws.com/prod/api/player/4611686018483989613`, async res =>
             {
                 let data = '';
 
@@ -354,10 +359,11 @@ module.exports =
                 if (targetId)
                 {
                     await msg.author.send("Σε έχω, στέλνω τώρα!");
-                    await bot.users.get(targetId).send(escape(payload.message))
+                    await bot.users.get(targetId).send(payload.message)
                     .then(
-                        () =>
+                        async () =>
                         {
+                            await msg.author.send("Έφτασε το meming σου!");
                             const time = GetTime();
                             fs.appendFile(memingFile, `${time}: O \'${msg.author.tag}\' memeάρει με: ${msg.content}\r\n`, function (err)
                             {
@@ -388,10 +394,14 @@ module.exports =
 | ΟΤΙ ΒΛΕΠΕΙΣ ΕΔΩ ΓΙΝΟΝΤΑΙ ΜΟΝΟ ΑΝ ΚΑΝΕΙΣ PM ΣΕ ΕΜΕΝΑ!!!!! |\r\n\
 ----------------------------------------------------------------------------------\r\n\
 \r\n\
-- Αν θες να memeάρεις κάποιον, γράψε: ```meme {"target": "Username#1234", "message": "Εδώ μόνο αλλάζεις!"}``` Απαγορεύεται να βάλεις μέσα στο μήνυμά σου τον χαρακτήρα \", γιατί δεν θα δουλέψει!\r\n\
-Από όσο ξέρω, μπορείς να στείλεις μόνο σε άτομα που είναι σε server που είμαι και εγώ...\r\n\
+- Αν θες να memeάρεις κάποιον, γράψε:\r\n\
+```json\r\n\
+meme {"target": "Username#1234", "message": "Εδώ μόνο αλλάζεις!"}\r\n\
+```\r\n\
+Άλλαξε μόνο τα πράσινα γράμματα. \r\n\
+Απαγορεύεται να βάλεις μέσα στο μήνυμά σου τον χαρακτήρα *\"*, γιατί δεν θα δουλέψει!\r\n\
+Mπορείς να στείλεις μόνο σε άτομα που είναι σε κοινό server με εμένα!\r\n\
 -------------------------------------------------------------------------------------------------------------------------------------------\r\n\
-- Αν θες απλά να μιλήσουμε, γράψε το μήνυμά σου. Η συζήτηση για την ώρα είναι με ανθρώπινο παράγοντα, οπότε μπορεί να μην είναι πάντα διαθέσιμη.\
             ');
 
             return;
@@ -458,14 +468,12 @@ const noSuggestions = [
 
 const memeWhitelist = [
     "Sheepstress#9964",
-    "OddCoin#1344",
     "saeko#6666",
     "Saint-14-TheViolentKing#2277",
-    "Ntouris#1155",
     "Simpa#7809",
     "Eniantas#4748",
     "𝒴𝒪𝒰𝑅𝓃𝒶𝓂𝑒𝐻𝐸𝑅𝐸#3639",
-    "LegendaryReaper#8082",
+    "ʙᴇʏᴏɴᴅᴛʜᴇᴍᴀᴄʜ1ɴ3#7047",
 ]
 
 const curses = [
@@ -614,7 +622,8 @@ async function HandleDoctor(msg, client)
 Γειά σου ${mention}!\r\n
 - Σε περίπτωση που δεν βλέπεις καλά, επικοινώνησε με τον οφθαλμίατρο που προτείνουμε:\r\n**\`\`\`Γεώργιος Αυτισματίας\r\nΟδός: Μητρώς 69\r\nTηλέφωνο: 6969420666\`\`\`**\
 - Σε περίπτωση που δεν έχεις εγκέφαλο, είσαι ευπρόσδεκτος σε αυτόν τον σέρβερ: https://discord.gg/cEcy53C\r\n
-- Σε περίπτωση που ο παραπάνω σέρβερ δεν σε καλύπτει, προτείνουμε και αυτόν: https://discord.gg/KJwuW3jBSA\
+- Σε περίπτωση που ο παραπάνω σέρβερ δεν σε καλύπτει, προτείνουμε και αυτόν: https://discord.gg/KJwuW3jBSA\r\n
+- Τέλος, ακόμα τίποτα από τα παραπάνω δεν σε καλύπτει, τότε προτίνω ΝΑΠΑΣΝΑΠΕΘΑ... να μπεις σε αυτόν τον σέρβερ να βρείς νέους φίλους: \
         `;
         await msg.channel.send(reply);
         await msg.delete(1);
@@ -633,6 +642,21 @@ async function HandleRetard(msg, client)
         const reply = `My nAme Is ${mention} aNd I aM rEtaRdED, dahhhhhh!`;
         const retardFile = "./src/media/retard/" + retardFiles[Math.floor(Math.random() * retardFiles.length)];
         await msg.channel.send(reply, {files: [retardFile]});
+        await msg.delete(1);
+    }
+    return Promise.resolve();
+}
+
+async function HandleReverse(msg, client)
+{
+    const mention = msg.mentions.users.first() || msg.author;
+    
+    if (mention.username + "#" + mention.discriminator === "Sheepstress#9964")
+        await msg.channel.send(`Άκουσε καλά παιδάκι ${msg.author}, τον προγραμματιστή που με έφτιαξε δεν θα τον πιάνεις στο στόμα σου!`);
+    else
+    {
+        const retardFile = "./src/media/images/uno-reverse-card.jpg";
+        await msg.channel.send(`NO U ${mention}`, {files: [retardFile]});
         await msg.delete(1);
     }
     return Promise.resolve();
