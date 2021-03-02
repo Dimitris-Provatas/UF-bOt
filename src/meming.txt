@@ -1,0 +1,5 @@
+2021/03/02 14:48:21.603: O 'Sheepstress#9964' memeάρει με: meme {"target": "GeorgeMC2610#8036", "message": "Εισαι κακος παιχτης και το ξερεις!"}
+2021/03/02 14:59:41.281: O 'GeorgeMC2610#8036' memeάρει με: meme {"target": "Sheepstress#9964", "message": "Εδώ μόνο αλλάζεις!"}
+2021/03/02 15:00:01.935: O 'GeorgeMC2610#8036' memeάρει με: meme {"target": "GeorgeMC2610#8036", "message": "Εδώ μόνο αλλάζεις!"}
+2021/03/02 15:00:17.905: O 'GeorgeMC2610#8036' memeάρει με: meme {"target": "GeorgeMC2610#8036", "message": "ΓΤΧΣ"}
+2021/03/02 15:01:16.927: O 'GeorgeMC2610#8036' memeάρει με: meme {"target": "Sheepstress#9964", "message": "ΓΤΧΣ ΕΙΣΑΙ ΓΤΠ ΠΡΟΓΡΑΜΜΑΤΙΣΤΗΣ"}

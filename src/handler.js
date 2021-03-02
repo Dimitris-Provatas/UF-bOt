@@ -307,10 +307,16 @@ module.exports =
             }
             // Βρίζει μάνες
             else
-                await CurseEverything(msg).then(
-                    () => { return; },  // resolve
-                    () => { ConsoleError('user', msg.author.username, msg.guild, msg.channel.name) }   // reject
-                );
+            {
+                if (msg.channel.name !== "moderators")
+                {
+                    await CurseEverything(msg).then(
+                        () => { return; },  // resolve
+                        () => { ConsoleError('user', msg.author.username, msg.guild, msg.channel.name) }   // reject
+                    );
+                    return;
+                }
+            }
         }
         
         return;
@@ -503,6 +509,7 @@ const memeWhitelist = [
     "Eniantas#4748",
     "𝒴𝒪𝒰𝑅𝓃𝒶𝓂𝑒𝐻𝐸𝑅𝐸#3639",
     "ʙᴇʏᴏɴᴅᴛʜᴇᴍᴀᴄʜ1ɴ3#7047",
+    "GeorgeMC2610#8036",
 ]
 
 const curses = [

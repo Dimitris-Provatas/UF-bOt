@@ -46,7 +46,6 @@ bot.on('message', async message =>
     else if (// General commands
         message.channel.name.includes("music") ||
         message.channel.name.includes("rythm") ||
-        message.channel.name === "moderators" ||
         // Welcome
         message.channel.name === "welcome" ||
         message.channel.name === "rules" ||
