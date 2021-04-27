@@ -175,139 +175,139 @@ module.exports =
             // Link check
             // Deny links and emojis
             // Any message that must not be a link to be proccessed
-            if (!msg.content.includes("http") && !msg.content.includes("<:") && !msg.content.includes("<@"))
-            {
+            // if (!msg.content.includes("http") && !msg.content.includes("<:") && !msg.content.includes("<@"))
+            // {
                 // τρια
-                if (
-                    !msg.content.includes(":3") &&
-                    (
-                        msg.content.includes("3") || msg.content.includes(" τρια ") || msg.content.includes(" τρία ") ||
-                        msg.content.includes("Τρια ") || msg.content.includes("ΤΡΙΑ") ||
-                        msg.content.includes("tria ") || msg.content.includes("Tria ") || msg.content.includes("TRIA")
-                    )
-                    )
-                {
-                    await msg.channel.send(`${msg.author} ΤΡΙΑ; ΝΑ ΤΑ ΦΑΣ ΚΑΙ ΝΑ ΕΙΝΑΙ ΚΡΥΑ!`);
-                    return;
-                }
-                // τρεις
-                else if (
-                    msg.content.includes(" τρεις") || msg.content.includes("Τρεις") || msg.content.includes("ΤΡΕΙΣ") ||
-                    msg.content.includes(" τρεισ") || msg.content.includes("Τρεισ") || msg.content.includes("ΤΡΕΙς") ||
-                    msg.content.includes(" treis") || msg.content.includes("Treis") || msg.content.includes("TREIS") ||
-                    msg.content.includes(" tris") || msg.content.includes("Tris") || msg.content.includes("TRIS")
-                    )
-                {
-                    const woah = await bot.emojis.get("786165881038307358");
-                    await msg.channel.send(`${msg.author} ΤΡΕΙΣ ΝΑ ΕΙΝΑΙ ΟΙ ΩΡΕΣ ΣΟΥ! ${woah}`);
-                    return;
-                }
-                // οκτω 
-                else if (
-                    msg.content.includes("8") ||
-                    msg.content.includes(" οκτω") || msg.content.includes(" οκτώ") || msg.content.includes(" οχτω") || msg.content.includes(" οχτώ") ||
-                    msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") ||
-                    msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") ||
-                    msg.content.includes(" okto") || msg.content.includes("Okto") || msg.content.includes("OKTO")
-                    )
-                {
-                    await msg.channel.send(`${msg.author} ΟΥΧΤΟ; ΤΗΣ ΜΑΝΑΣ ΤΟΝ ΠΡΟΥΧΤΟ!`);
-                    return;
-                }
-            }
+            //     if (
+            //         !msg.content.includes(":3") &&
+            //         (
+            //             msg.content.includes("3") || msg.content.includes(" τρια ") || msg.content.includes(" τρία ") ||
+            //             msg.content.includes("Τρια ") || msg.content.includes("ΤΡΙΑ") ||
+            //             msg.content.includes("tria ") || msg.content.includes("Tria ") || msg.content.includes("TRIA")
+            //         )
+            //         )
+            //     {
+            //         await msg.channel.send(`${msg.author} ΤΡΙΑ; ΝΑ ΤΑ ΦΑΣ ΚΑΙ ΝΑ ΕΙΝΑΙ ΚΡΥΑ!`);
+            //         return;
+            //     }
+            //     // τρεις
+            //     else if (
+            //         msg.content.includes(" τρεις") || msg.content.includes("Τρεις") || msg.content.includes("ΤΡΕΙΣ") ||
+            //         msg.content.includes(" τρεισ") || msg.content.includes("Τρεισ") || msg.content.includes("ΤΡΕΙς") ||
+            //         msg.content.includes(" treis") || msg.content.includes("Treis") || msg.content.includes("TREIS") ||
+            //         msg.content.includes(" tris") || msg.content.includes("Tris") || msg.content.includes("TRIS")
+            //         )
+            //     {
+            //         const woah = await bot.emojis.get("786165881038307358");
+            //         await msg.channel.send(`${msg.author} ΤΡΕΙΣ ΝΑ ΕΙΝΑΙ ΟΙ ΩΡΕΣ ΣΟΥ! ${woah}`);
+            //         return;
+            //     }
+            //     // οκτω 
+            //     else if (
+            //         msg.content.includes("8") ||
+            //         msg.content.includes(" οκτω") || msg.content.includes(" οκτώ") || msg.content.includes(" οχτω") || msg.content.includes(" οχτώ") ||
+            //         msg.content.includes("Οκτω") || msg.content.includes("Οκτώ") || msg.content.includes("ΟΚΤΩ") ||
+            //         msg.content.includes("Οχτω") || msg.content.includes("Οχτώ") || msg.content.includes("ΟΧΤΩ") ||
+            //         msg.content.includes(" okto") || msg.content.includes("Okto") || msg.content.includes("OKTO")
+            //         )
+            //     {
+            //         await msg.channel.send(`${msg.author} ΟΥΧΤΟ; ΤΗΣ ΜΑΝΑΣ ΤΟΝ ΠΡΟΥΧΤΟ!`);
+            //         return;
+            //     }
+            // }
 
             // Allow links and emojis
             // ποσο - τοσο joke
-            if (
-                msg.content.includes(" πόσο ") || msg.content.includes(" ποσο ") || msg.content.includes("Πόσο ") || msg.content.includes("Ποσο ") || msg.content.includes(" ΠΟΣΟ ")
-                || msg.content.includes(" poso ") || msg.content.includes("Poso ") || msg.content.includes(" POSO ")
-                )
-            {
-                await msg.channel.send(`${msg.author} ΤΟΣΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-                return;
-            }
-            // ποσα - τοσα joke
-            else if (
-                msg.content.includes(" πόσα ") || msg.content.includes(" ποσα ") || msg.content.includes("Πόσα ") || msg.content.includes("Ποσα ") || msg.content.includes(" ΠΟΣΑ ")
-                || msg.content.includes(" posa ") || msg.content.includes("Posa ") || msg.content.includes(" POSA ")
-                )
-            {
-                await msg.channel.send(`${msg.author} ΤΟΣΑ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-                return;
-            }
-            // ποιος - αυτος joke
-            else if (
-                msg.content.includes("ΠΟΙΟΣ") ||
-                msg.content.includes(" ποιος") || msg.content.includes(" ποίος") || msg.content.includes(" ποιός") ||
-                msg.content.includes(" ποιοσ") || msg.content.includes(" ποίοσ") || msg.content.includes(" ποιόσ") ||
-                msg.content.includes("Ποιος") || msg.content.includes("Ποίος") || msg.content.includes("Ποιός") ||
-                msg.content.includes("Ποιοσ") || msg.content.includes("Ποίοσ") || msg.content.includes("Ποιόσ") ||
-                msg.content.includes(" poios") || msg.content.includes("Poios") || msg.content.includes("POIOS")
-                )
-            {
-                await msg.channel.send(`${msg.author} ΑΥΤΟΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-                return;
-            }
-            // ποιον - αυτον joke
-            else if (
-                msg.content.includes("ΠΟΙΟΝ") ||
-                msg.content.includes(" ποιον") || msg.content.includes(" ποίον") || msg.content.includes(" ποιόν") ||
-                msg.content.includes("Ποιον") || msg.content.includes("Ποίον") || msg.content.includes("Ποιόν") ||
-                msg.content.includes(" poion") || msg.content.includes("Poion") || msg.content.includes("POION")
-                )
-            {
-                await msg.channel.send(`${msg.author} ΑΥΤΟΝ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-                return;
-            }
-            // ποια - αυτη joke
-            else if (
-                msg.content.includes("ΠΟΙΑ") ||
-                msg.content.includes(" ποια") || msg.content.includes(" ποία") || msg.content.includes(" ποιά") ||
-                msg.content.includes(" Ποια") || msg.content.includes("Ποία") || msg.content.includes("Ποιά") ||
-                msg.content.includes(" poia") || msg.content.includes("Poia") || msg.content.includes("POIA")
-                )
-            {
-                await msg.channel.send(`${msg.author} ΑΥΤΗ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-                return;
-            }
-            // ποιο - αυτο joke
-            else if (
-                msg.content.includes("ΠΟΙΟ") ||
-                msg.content.includes(" ποιο") || msg.content.includes(" ποίο") || msg.content.includes(" ποιό") ||
-                msg.content.includes("Ποιο") || msg.content.includes("Ποίο") || msg.content.includes("Ποιό") ||
-                msg.content.includes(" poio") || msg.content.includes("Poio") || msg.content.includes("POIO")
-                )
-            {
-                await msg.channel.send(`${msg.author} ΑΥΤΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-                return;
-            }
-            // ποιοι - αυτος joke
-            else if (
-                msg.content.includes("ΠΟΙΟΙ") ||
-                msg.content.includes(" ποιοι") || msg.content.includes(" ποίοι") || msg.content.includes(" ποιοί") ||
-                msg.content.includes("Ποιοι") || msg.content.includes("Ποίοι") || msg.content.includes("Ποιοί") ||
-                msg.content.includes(" poioi") || msg.content.includes("Poioi") || msg.content.includes("POIOI")
-                )
-            {
-                await msg.channel.send(`${msg.author} ΑΥΤΟΙ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-                return;
-            }
-            // ποιες - αυτη joke
-            else if (
-                msg.content.includes("ΠΟΙΕΣ") ||
-                msg.content.includes(" ποιες") || msg.content.includes(" ποίες") || msg.content.includes(" ποιές") ||
-                msg.content.includes(" ποιεσ") || msg.content.includes(" ποίεσ") || msg.content.includes(" ποιέσ") ||
-                msg.content.includes("Ποιες") || msg.content.includes("Ποίες") || msg.content.includes("Ποιές") ||
-                msg.content.includes("Ποιεσ") || msg.content.includes("Ποίεσ") || msg.content.includes("Ποιέσ") ||
-                msg.content.includes(" poies") || msg.content.includes("Poies") || msg.content.includes("POIES")
-                )
-            {
-                await msg.channel.send(`${msg.author} ΑΥΤΕΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
-                return;
-            }
-            // Βρίζει μάνες
-            else
-            {
+            // if (
+            //     msg.content.includes(" πόσο ") || msg.content.includes(" ποσο ") || msg.content.includes("Πόσο ") || msg.content.includes("Ποσο ") || msg.content.includes(" ΠΟΣΟ ")
+            //     || msg.content.includes(" poso ") || msg.content.includes("Poso ") || msg.content.includes(" POSO ")
+            //     )
+            // {
+            //     await msg.channel.send(`${msg.author} ΤΟΣΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+            //     return;
+            // }
+            // // ποσα - τοσα joke
+            // else if (
+            //     msg.content.includes(" πόσα ") || msg.content.includes(" ποσα ") || msg.content.includes("Πόσα ") || msg.content.includes("Ποσα ") || msg.content.includes(" ΠΟΣΑ ")
+            //     || msg.content.includes(" posa ") || msg.content.includes("Posa ") || msg.content.includes(" POSA ")
+            //     )
+            // {
+            //     await msg.channel.send(`${msg.author} ΤΟΣΑ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+            //     return;
+            // }
+            // // ποιος - αυτος joke
+            // else if (
+            //     msg.content.includes("ΠΟΙΟΣ") ||
+            //     msg.content.includes(" ποιος") || msg.content.includes(" ποίος") || msg.content.includes(" ποιός") ||
+            //     msg.content.includes(" ποιοσ") || msg.content.includes(" ποίοσ") || msg.content.includes(" ποιόσ") ||
+            //     msg.content.includes("Ποιος") || msg.content.includes("Ποίος") || msg.content.includes("Ποιός") ||
+            //     msg.content.includes("Ποιοσ") || msg.content.includes("Ποίοσ") || msg.content.includes("Ποιόσ") ||
+            //     msg.content.includes(" poios") || msg.content.includes("Poios") || msg.content.includes("POIOS")
+            //     )
+            // {
+            //     await msg.channel.send(`${msg.author} ΑΥΤΟΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+            //     return;
+            // }
+            // // ποιον - αυτον joke
+            // else if (
+            //     msg.content.includes("ΠΟΙΟΝ") ||
+            //     msg.content.includes(" ποιον") || msg.content.includes(" ποίον") || msg.content.includes(" ποιόν") ||
+            //     msg.content.includes("Ποιον") || msg.content.includes("Ποίον") || msg.content.includes("Ποιόν") ||
+            //     msg.content.includes(" poion") || msg.content.includes("Poion") || msg.content.includes("POION")
+            //     )
+            // {
+            //     await msg.channel.send(`${msg.author} ΑΥΤΟΝ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+            //     return;
+            // }
+            // // ποια - αυτη joke
+            // else if (
+            //     msg.content.includes("ΠΟΙΑ") ||
+            //     msg.content.includes(" ποια") || msg.content.includes(" ποία") || msg.content.includes(" ποιά") ||
+            //     msg.content.includes(" Ποια") || msg.content.includes("Ποία") || msg.content.includes("Ποιά") ||
+            //     msg.content.includes(" poia") || msg.content.includes("Poia") || msg.content.includes("POIA")
+            //     )
+            // {
+            //     await msg.channel.send(`${msg.author} ΑΥΤΗ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+            //     return;
+            // }
+            // // ποιο - αυτο joke
+            // else if (
+            //     msg.content.includes("ΠΟΙΟ") ||
+            //     msg.content.includes(" ποιο") || msg.content.includes(" ποίο") || msg.content.includes(" ποιό") ||
+            //     msg.content.includes("Ποιο") || msg.content.includes("Ποίο") || msg.content.includes("Ποιό") ||
+            //     msg.content.includes(" poio") || msg.content.includes("Poio") || msg.content.includes("POIO")
+            //     )
+            // {
+            //     await msg.channel.send(`${msg.author} ΑΥΤΟ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+            //     return;
+            // }
+            // // ποιοι - αυτος joke
+            // else if (
+            //     msg.content.includes("ΠΟΙΟΙ") ||
+            //     msg.content.includes(" ποιοι") || msg.content.includes(" ποίοι") || msg.content.includes(" ποιοί") ||
+            //     msg.content.includes("Ποιοι") || msg.content.includes("Ποίοι") || msg.content.includes("Ποιοί") ||
+            //     msg.content.includes(" poioi") || msg.content.includes("Poioi") || msg.content.includes("POIOI")
+            //     )
+            // {
+            //     await msg.channel.send(`${msg.author} ΑΥΤΟΙ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+            //     return;
+            // }
+            // // ποιες - αυτη joke
+            // else if (
+            //     msg.content.includes("ΠΟΙΕΣ") ||
+            //     msg.content.includes(" ποιες") || msg.content.includes(" ποίες") || msg.content.includes(" ποιές") ||
+            //     msg.content.includes(" ποιεσ") || msg.content.includes(" ποίεσ") || msg.content.includes(" ποιέσ") ||
+            //     msg.content.includes("Ποιες") || msg.content.includes("Ποίες") || msg.content.includes("Ποιές") ||
+            //     msg.content.includes("Ποιεσ") || msg.content.includes("Ποίεσ") || msg.content.includes("Ποιέσ") ||
+            //     msg.content.includes(" poies") || msg.content.includes("Poies") || msg.content.includes("POIES")
+            //     )
+            // {
+            //     await msg.channel.send(`${msg.author} ΑΥΤΕΣ 1-0! ΒΟΥΛΩΝΕ ΤΩΡΑ!`);
+            //     return;
+            // }
+            // // Βρίζει μάνες
+            // else
+            // {
                 if (msg.channel.name !== "moderators")
                 {
                     await CurseEverything(msg).then(
@@ -316,7 +316,7 @@ module.exports =
                     );
                     return;
                 }
-            }
+            // }
         }
         
         return;
